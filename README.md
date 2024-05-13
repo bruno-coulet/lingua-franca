@@ -17,3 +17,11 @@ Translator Flask app using Google Translate API
 - `install.sh` : Bash script to install project
     - Create virtual environment
     - Install dependencies
+- src/ : Contain sources
+    - templates/ : Contain HTML templates
+        - `index.html` : The interface
+    - `forms.py` : Contain TranlsationForm class
+    - `translation.py` : Contain functions to connect to the translation API
+    - `app.py` : Contain the Flask app, and routes
+        - '/' index() to display the interface
+        - 'translate/' translate() to retrieve ajax requests for form submission and return the translated text
