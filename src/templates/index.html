@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translator</title>
+</head>
+<body>
+    <h1>Welcome to our translation app</h1>
+    <h2>Translate your text</h2>
+    <form id="translation-form">
+        {{ form.csrf_token() }}
+        {% for field in form if field.widget.input_type != 'hidden' %}
+        <div>
+            {{ field.label }}
+            {{ field }}
+        </div>
+        {% endfor %}
+        <input type="submit" value="Translate">
+    </form>
+    <div id="result-wrapper">
+        <h2>Translated text</h2>
+        <p id="result"><!-- Translated text generated here --></p>
+    </div>
+
+    <script>
+        const translationForm = document.getElementById('translation-form')
+        const result = document.getElementById('result')
+
+        translationForm.addEventListener('submit', (event) => {
+            console.log("submit")
+            event.preventDefault()
+            const formData = new FormData(translationForm)
+            fetch('/translate', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                result.textContent = data.text
+            })
+        })
+    </script>
+</body>
+</html>

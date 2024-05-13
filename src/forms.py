@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import SelectField
+from wtforms import SelectField, StringField, SubmitField, TextAreaField
 
 from translation import list_languages
 
@@ -14,13 +14,9 @@ class TranslationForm(FlaskForm):
                                   choices=[],
                                   default="auto",
                                   render_kw={"id": "target-language"})
-    text_to_translate = SelectField("Text",
-                                    choices=[],
+    text_to_translate = TextAreaField("Text",
                                     render_kw={"id": "text-to-translate",
                                                "placeholder": "Enter text to translate ..."})
-    submit = SelectField("Submit",
-                         choices=[],
-                         render_kw={"id": "submit"})
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

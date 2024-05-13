@@ -9,8 +9,8 @@ def list_languages():
 
 def detect_language(text):
     # TODO : get the detected language from Google Translate API
-    return ("EN", "English")
+    return "EN"
 
-def translate(text, from_language, to_language):
+def translate_text(text, from_language, to_language):
     # TODO : translate the text from one language to another
     return f"Translated {from_language} to {to_language}: {text.upper()}"
