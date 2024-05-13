@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# TODO : Add MODE option (DEV or PROD), actually only DEV
-
 python -m venv venv
 if [ -d "venv/bin" ]; then
     VENV_PATH="venv/bin/activate"
@@ -9,7 +7,7 @@ if [ -d "venv/bin" ]; then
 elif [ -d "venv/Scripts" ]; then
     VENV_PATH="venv/Scripts/activate"
 else
-    echo "Erreur : Répertoire d'environnement virtuel introuvable."
+    echo "Error : Virtual environment directory not found."
     exit 1
 fi
 
