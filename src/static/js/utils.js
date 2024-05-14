@@ -3,6 +3,8 @@
 /**
  * Form utils
  * @namespace
+ * @property {function} updateFormFields - Update the form fields from a FormData object
+ * @property {function} displayErrors - Display errors in the form
  */
 const FormUtils = {
     /**
