@@ -5,7 +5,7 @@ Translator Flask app using Google Translate API
 - [lingua-franca](#lingua-franca)
   - [Table of content](#table-of-content)
   - [Getting started](#getting-started)
-  - [Files](#files)
+  - [Project files](#project-files)
 
 ## Getting started
 - Open git bash
@@ -13,11 +13,14 @@ Translator Flask app using Google Translate API
 - Move in the repo : `cd lingua-franca`
 - Run install.sh : `source install.sh`
 
-## Files
+## Project files
+- **README.md** : Project details (this file)
+- **.gitignore** : Files ignored by Git
+- **requirements.txt** : Project dependencies
 - **install.sh** : Bash script to install project
     - Create virtual environment
     - Install dependencies
-- **src/** : Contain sources
+- **src/** : Contain source files
     - **templates/** : Contain HTML templates
         - **index.html** : The interface
     - **forms.py** : Contain TranlsationForm class
