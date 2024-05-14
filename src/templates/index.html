@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translator</title>
+    <style>
+        .error-message {
+            color: red;
+        }
+        .success-message {
+            color: green;
+        }
+    </style>
+    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+    <h1>Welcome to our translation app</h1>
+    <h2>Translate your text</h2>
+    <form id="translation-form">
+        {{ form.csrf_token() }}
+        {% for field in form if field.widget.input_type != 'hidden' %}
+        <div class="field-wrapper" id="{{ field.name }}-wrapper">
+            {{ field.label }}
+            {{ field }}
+            <!-- TODO : put color in CSS -->
+            <p class="error-message" id="{{ field.name }}-error"><!-- Error message generated here --></p>
+        </div>
+        {% endfor %}
+        <input type="submit" value="Translate">
+    </form>
+    <div id="result-wrapper">
+        <h2>Translated text</h2>
+        <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
+        <p id="translated-text"><!-- Translated text generated here --></p>
+    </div>
+</body>
+</html>
