@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Translator</title>
+    <style>
+        .error-message {
+            color: red;
+        }
+        .success-message {
+            color: green;
+        }
+    </style>
+    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
 </head>
 <body>
     <h1>Welcome to our translation app</h1>
@@ -11,36 +20,78 @@
     <form id="translation-form">
         {{ form.csrf_token() }}
         {% for field in form if field.widget.input_type != 'hidden' %}
-        <div>
+        <div class="field-wrapper" id="{{ field.name }}-wrapper">
             {{ field.label }}
             {{ field }}
+            <!-- TODO : put color in CSS -->
+            <p class="error-message" id="{{ field.name }}-error"><!-- Error message generated here --></p>
         </div>
         {% endfor %}
         <input type="submit" value="Translate">
     </form>
     <div id="result-wrapper">
         <h2>Translated text</h2>
-        <p id="result"><!-- Translated text generated here --></p>
+        <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
+        <p id="translated-text"><!-- Translated text generated here --></p>
     </div>
 
-    <script>
-        const translationForm = document.getElementById('translation-form')
-        const result = document.getElementById('result')
-
+    <!-- <script>
+        const translationForm = document.getElementById('translation-form');
+        const result = document.getElementById('result');
+        
         translationForm.addEventListener('submit', (event) => {
-            console.log("submit")
-            event.preventDefault()
-            const formData = new FormData(translationForm)
+            event.preventDefault();
+            const formData = new FormData(translationForm);
+            if (formData.get("source_language") === "auto") {
+                fetch('/detect-language', {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        formData.set("source_language", data.language);
+                    } else {
+                        throw new Error('Source language could not be detected');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    result.textContent = error
+                });
+            }
             fetch('/translate', {
                 method: 'POST',
                 body: formData
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
-                result.textContent = data.text
+                // Reset error messages
+                const errorFields = document.querySelectorAll('.error-message');
+                errorFields.forEach(field => field.textContent = '');
+
+                if (data.status === 'success') {
+                    // Display translated text
+                    result.textContent = data.translated_text;
+                } else {
+                    // Display error messages
+                    const errors = data.errors;
+                    for (const fieldName in errors) {
+                        const errorField = document.getElementById(`${fieldName}-error`);
+                        console.log(errorField)
+                        if (errorField) {
+                            errorField.textContent = errors[fieldName];
+                        }
+                    }
+                    throw new Error('Sorry... An error occurred while translating the text.');
+                }
             })
-        })
-    </script>
+            .catch(error => {
+                console.error('Error:', error);
+                result.textContent = error
+            });
+        });
+        
+        
+    </script> -->
 </body>
 </html>
