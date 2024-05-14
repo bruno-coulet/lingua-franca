@@ -8,7 +8,6 @@ from translation import detect_language, translate_text
 # Configuration
 # TODO : move to .env file and read
 DEBUG = True
-# TODO : Add your Google API key here
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = generate_secret_key(24)
