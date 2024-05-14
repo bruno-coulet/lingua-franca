@@ -6,7 +6,7 @@
  * @property {function} updateFormFields - Update the form fields from a FormData object
  * @property {function} displayErrors - Display errors in the form
  */
-const FormUtils = {
+export const FormUtils = {
     /**
      * Update the form fields from a FormData object
      * @param {HTMLFormElement} form - The HTML form to update
@@ -46,5 +46,3 @@ const FormUtils = {
         };
     }
 };
-
-export default FormUtils;

@@ -21,13 +21,10 @@ function submitTranslationForm(formData) {
             DomElements.translatedText.textContent = data.translated_text;
         })
         .catch(error => {
-            console.log(error)
             const errors = JSON.parse(error.message);
-
             FormUtils.displayErrors(errors, DomElements.resultMessagesWrapper);
         })
     }).catch(error => {
-        console.log(error);
         const errors = JSON.parse(error.message);
         FormUtils.displayErrors(errors, DomElements.resultMessagesWrapper);
     })

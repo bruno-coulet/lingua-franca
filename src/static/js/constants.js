@@ -12,7 +12,7 @@
  * @property {HTMLParagraphElement} translatedText - The translated text
  * @property {HTMLDivElement} resultMessagesWrapper - The result messages wrapper
  */
-const DomElements = {
+export const DomElements = {
     translationForm: document.getElementById('translation-form'),
     translatedText: document.getElementById('translated-text'),
     resultMessagesWrapper: document.getElementById('result-messages-wrapper'),
@@ -25,10 +25,7 @@ const DomElements = {
  * @property {string} translate - The route for the translation API
  * @property {string} detectLanguage - The route for the detect language API
  */
-const ApiRoutes = {
+export const ApiRoutes = {
     translate: '/translate',
     detectLanguage: '/detect-language',
 }
-
-
-export default {DomElements, ApiRoutes}

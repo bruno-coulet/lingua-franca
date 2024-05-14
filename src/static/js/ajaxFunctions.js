@@ -1,4 +1,5 @@
 // Contains AJAX functions namespace
+import { ApiRoutes } from './constants.js';
 
 /**
  * Ajax functions
@@ -6,7 +7,7 @@
  * @property {function} detectLanguage - Detect the language of the text
  * @property {function} translate - Translate the text
  */
-const AjaxFunctions = {
+export const AjaxFunctions = {
     /**
      * Send a request to the detect language API
      * @param {FormData} formData - The FormData object
@@ -15,14 +16,11 @@ const AjaxFunctions = {
      */
     detectLanguage: async function (formData) {
         if (formData.get("source_language") === "auto") {
-            const response = await fetch(APIRoutes.detectLanguage, {
+            const response = await fetch(ApiRoutes.detectLanguage, {
                 method: 'POST',
                 body: formData
             })
-            if (!response.ok) {
-                throw new Error(JSON.stringify({network: response.statusText}));
-            }
-            data = await response.json();
+            const data = await response.json();
             if (data.status === 'success') {
                 formData.set("source_language", data.language);
                 return formData;
@@ -41,14 +39,11 @@ const AjaxFunctions = {
      * @throws {Error} - If the translation failed
      */
     translate: async function (formData) {
-        const response = await fetch(APIRoutes.translate, {
+        const response = await fetch(ApiRoutes.translate, {
             method: 'POST',
             body: formData
         });
-        if (!response.ok) {
-            throw new Error(JSON.stringify({network: response.statusText}));
-        };
-        data = await response.json();
+        const data = await response.json();
         if (data.status === 'success') {
             return data;
         } else {
@@ -56,5 +51,3 @@ const AjaxFunctions = {
         };
     }
 };
-
-export default AjaxFunctions;
