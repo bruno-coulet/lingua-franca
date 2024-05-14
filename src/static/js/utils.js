@@ -1,4 +1,4 @@
-// Contains utility functions
+// Contains utility functions namespaces
 
 /**
  * Form utils
