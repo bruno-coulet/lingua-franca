@@ -18,7 +18,7 @@ function submitTranslationForm(formData) {
             successMessage.classList.add("success-message");
             successMessage.textContent = "Successful translation !";
             DomElements.resultMessagesWrapper.appendChild(successMessage);
-            DomElements.translatedText.textContent = data.translated_text;
+            DomElements.translatedText.value = data.translated_text;
         })
         .catch(error => {
             const errors = JSON.parse(error.message);

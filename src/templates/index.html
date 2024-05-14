@@ -26,12 +26,9 @@
             <p class="error-message" id="{{ field.name }}-error"><!-- Error message generated here --></p>
         </div>
         {% endfor %}
+        
+        <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
         <input type="submit" value="Translate">
     </form>
-    <div id="result-wrapper">
-        <h2>Translated text</h2>
-        <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
-        <textarea id="translated-text" placeholder="Translated text ..." readonly></textarea>
-    </div>
 </body>
 </html>

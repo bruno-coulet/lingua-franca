@@ -16,10 +16,13 @@ class TranslationForm(FlaskForm):
                                   default="",
                                   render_kw={"id": "target_language"},
                                   validators=[DataRequired("Please select a target language")])
-    text_to_translate = TextAreaField("Text",
+    text_to_translate = TextAreaField("Text to translate",
                                       render_kw={"id": "text_to_translate",
-                                              "placeholder": "Enter text to translate ..."},
+                                                 "placeholder": "Enter text to translate ..."},
                                       validators=[DataRequired("Please enter text to translate")])
+    text_translated = TextAreaField("Translated text", render_kw={"id": "translated-text",
+                                                                  "placeholder": "Translated text", 
+                                                                  "readonly": True})
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
