@@ -26,9 +26,15 @@
             <p class="error-message" id="{{ field.name }}-error"><!-- Error message generated here --></p>
         </div>
         {% endfor %}
-        
-        <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
+        <!-- TODO : Remove submit button and use change events instead -->
         <input type="submit" value="Translate">
+
+        <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
+        <!-- TODO : Add reverse-languages button click handler -->
+        <button id="reverse-languages">Reversing Languages</button>
+        <!-- TODO : Add loading spinner during form submission -->
+        <div id="loading-spinner"><!-- Loading spinner generated here --></div>
+        
     </form>
 </body>
 </html>
