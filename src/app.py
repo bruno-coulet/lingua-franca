@@ -20,36 +20,45 @@ def index():
     return render_template("index.html", form=form)
 
 
+@app.route("/detect-language", methods=["POST"])
+def detect():
+    form = TranslationForm(request.form)
+    if form.validate_on_submit():
+        text = form.text_to_translate.data
+        target_language = detect_language(text)
+        source_language = form.source_language.data
+
+        if source_language == target_language:
+            return jsonify({"status": "error",
+                            "errors": {"languages": "Source and target language must be different"}}), 400
+
+        return jsonify({"status": "success",
+                        "language": target_language}), 200
+    else:
+        return jsonify({"status": "error", "errors": form.errors}), 400
+
+
 @app.route("/translate", methods=["POST"])
 def translate():
     form = TranslationForm(request.form)
-    print(form.data)
-    if form.validate():
-        
+    if form.validate_on_submit():
         text = form.text_to_translate.data
         source_language = form.source_language.data
         target_language = form.target_language.data
-        if not text:
-            return jsonify({"error": "No text to translate"})
-        if not source_language or not target_language:
-            return jsonify({"error": "Not source or target langage"})
         
-        if source_language == "auto":
-            langage_detected = detect_language(form.text_to_translate.data)
-            if langage_detected is None:
-                return jsonify({"error": "Could not detect language"})
-            
-            source_language = langage_detected
-
         if source_language == target_language:
-            return jsonify({"error": "Source and target language must be different"})
+            return jsonify({"status": "error",
+                            "errors": {"languages": "Source and target language must be different"}}), 400
         
-        print(source_language, target_language, text)
         translated_text = translate_text(text, source_language, target_language)
-        return jsonify({"text": translated_text,
+        return jsonify({"status": "success",
+                        "translated_text": translated_text,
                         "source_language": source_language,
-                        "target_language": target_language})
+                        "target_language": target_language}), 200
+    else:
+        return jsonify({"status": "error",
+                        "errors": form.errors}), 400
 
-    return jsonify({"error": "Invalid request"}), 400
+
 if __name__ == "__main__":
     app.run(debug=DEBUG)
