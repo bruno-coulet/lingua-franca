@@ -4,7 +4,6 @@ from wtforms.validators import DataRequired
 
 from translation import list_languages
 
-LANGUAGES = list_languages()
 
 class TranslationForm(FlaskForm):
     source_language = SelectField("Source language",
@@ -14,7 +13,7 @@ class TranslationForm(FlaskForm):
                                   validators=[DataRequired("Please select a source language")])
     target_language = SelectField("Target language",
                                   choices=[],
-                                  default="auto",
+                                  default="",
                                   render_kw={"id": "target_language"},
                                   validators=[DataRequired("Please select a target language")])
     text_to_translate = TextAreaField("Text",
@@ -24,5 +23,6 @@ class TranslationForm(FlaskForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.source_language.choices = [("auto", "Auto")] + LANGUAGES
-        self.target_language.choices = [("", "Select a target language")] + LANGUAGES
+        available_languages = list_languages()
+        self.source_language.choices = [("auto", "Automatic Detection")] + available_languages
+        self.target_language.choices = [("", "Select a target language")] + available_languages

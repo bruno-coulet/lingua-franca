@@ -5,14 +5,17 @@ from flask import Flask, jsonify, render_template, request
 from forms import TranslationForm
 from translation import detect_language, translate_text
 
+
 # Configuration
 # TODO : move to .env file and read
 DEBUG = True
 
+# Flask app
 app = Flask(__name__)
 app.config["SECRET_KEY"] = generate_secret_key(24)
 
 
+# Routes
 @app.route("/")
 def index():
     form = TranslationForm()
@@ -59,5 +62,6 @@ def translate():
                         "errors": form.errors}), 400
 
 
+# Run
 if __name__ == "__main__":
     app.run(debug=DEBUG)
