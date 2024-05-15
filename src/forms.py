@@ -7,24 +7,25 @@ from translation import list_languages
 
 class TranslationForm(FlaskForm):
     source_language = SelectField("Source language",
+                                  id="source-language",
                                   choices=[],
                                   default="auto",
-                                  render_kw={"id": "source_language"},
                                   validators=[DataRequired("Please select a source language")])
     target_language = SelectField("Target language",
+                                  id="target-language",
                                   choices=[],
                                   default="",
-                                  render_kw={"id": "target_language"},
                                   validators=[DataRequired("Please select a target language")])
     text_to_translate = TextAreaField("",
-                                      render_kw={"id": "text_to_translate",
-                                                 "placeholder": "Enter text to translate ...",
+                                      id="text-to-translate",
+                                      render_kw={"placeholder": "Enter text to translate ...",
                                                  "cols": 50, "rows": 15},
                                       validators=[DataRequired("Please enter text to translate")])
-    text_translated = TextAreaField("", render_kw={"id": "translated-text",
-                                                                  "placeholder": "Translated text", 
-                                                                  "readonly": True,
-                                                                  "cols": 50, "rows": 15})
+    text_translated = TextAreaField("",
+                                    id="translated-text",
+                                    render_kw={"placeholder": "Translated text", 
+                                               "readonly": True,
+                                               "cols": 50, "rows": 15})
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

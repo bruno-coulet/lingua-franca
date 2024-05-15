@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Translator</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
-
-    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script type="module" src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </head>
 <body>
     <div class="container">
@@ -15,24 +15,24 @@
             <h1>Welcome to our translation app</h1>
         </header>
         <main>
+            <h2>Text translation</h2>
             <form id="translation-form">
-                <h2>Translate your text</h2>
                 {{ form.csrf_token() }}
                 {% for field in form if field.widget.input_type != 'hidden' %}
-                <div class="field-wrapper" id="{{ field.name }}-wrapper">
+                <div class="field-wrapper" id="{{ field.id }}-wrapper">
                     {{ field.label }}
                     {{ field }}
-                    <p class="error-message" id="{{ field.name }}-error"><!-- Error message generated here --></p>
+                    <p class="error-message" id="{{ field.id }}-error"><!-- Error message generated here --></p>
                 </div>
                 {% endfor %}
                 <!-- TODO : Remove submit button and use change events instead -->
-                <input type="submit" value="Translate">
+                <input id="submit-button" type="submit" value="T">
     
                 <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
                 <!-- TODO : Add reverse-languages button click handler -->
-                <button id="reverse-languages">🔄</button>
+                <button id="reverse-languages" type="button">🔄</button>
                 <!-- TODO : Add loading spinner during form submission -->
-                <div id="loading-spinner"><!-- Loading spinner generated here --></div>
+                <div id="loading-spinner">🔄<!-- Loading spinner generated here --></div>
                 
             </form>
         </main>
