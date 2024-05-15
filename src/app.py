@@ -37,7 +37,8 @@ def detect():
         return jsonify({"status": "success",
                         "language": target_language}), 200
     else:
-        return jsonify({"status": "error", "errors": form.errors}), 400
+        errors = {field.replace("_", "-"): error for field, error in form.errors.items()}
+        return jsonify({"status": "error", "errors": errors}), 400
 
 
 @app.route("/translate", methods=["POST"])
