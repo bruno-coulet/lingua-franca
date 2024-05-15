@@ -20,7 +20,7 @@ Translator Flask app using Google Translate API
 - **install.sh** : Bash script to install project
     - Create virtual environment
     - Install dependencies
-- **src/** : Contain source files
+- **src/** : Source files
     - **templates/** : Contain HTML templates
         - **index.html** : The interface
     - **forms.py** : Contain TranlsationForm class
@@ -29,19 +29,24 @@ Translator Flask app using Google Translate API
         - `index()` : Display the interface
         - `detect()` : Detect the language
         - `translate()` : Translate the text
-    - **static/** : Contain static files dirs
-        - **js/** : Contain JavaScript modules
-            - **constants.js** : Contains constants namespaces
+    - **static/** : Static files dirs
+        - **js/** : JavaScript modules
+            - **constants.js** : Constants namespaces
                 - `DomElements` : Namespace for usefull HTML Dom elements
                 - `ApiRoutes` : Namespace for API routes
-            - **utils.js** : Contains utility functions namespaces
+            - **utils.js** : Utility functions namespaces
                 - `FormUtils` : Namespace for utility forms functions
                     - `updateFormFields(form, formData)` : Update the form with the FormData object
-                    - `displayErrors(errors, defaultParentElement, errorMessageClass="error-message", errorFieldSuffix="-error")` : Display the errors in the fields
-            - **ajaxFunctions.js** : Contain AJAX functions namespace
+                    - `displayErrors(errors, defaultParentElement, errorMessageClass="error-message")` : Display the errors in the fields
+            - **ajaxFunctions.js** : AJAX functions namespace
                 - `AjaxFunctions` : Namespace for AJAX calls
                     - `detectLanguage(formData)` : Send a POST request to detect-language/ API route
                     - `translate(formData)` : Send a POST request to translate/ API route
             - **script.js** : Main JS script
                 - `submitTranslationForm(formData)` : Submit the form to the backend and modify display with the response
                 - `addFormSubmitListener()` : Add an event listener on the form submit event to call `submitTranslationForm()`
+        - **css/** : CSS files
+            - **normalize.css** : To normalize styles
+            - **variables.css** : Variables (Colors ...)
+            - **style.css** : Project style
+  
