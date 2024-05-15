@@ -25,8 +25,7 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: fit-content;
-    background-color: var(--surface-color);
+    gap: 5px;
 }
 
 /* Grid */
@@ -64,9 +63,6 @@ main {
 /* Col 2 */
 #reverse-languages {
     grid-area: reverse-languages;
-    height: fit-content;
-    width: fit-content;
-
 }
 
 #loading-spinner {
@@ -91,4 +87,12 @@ main {
 /* TODO : remove submit button */
 #submit-button {
     grid-area: submit-button;
+}
+
+.error-message {
+    color: var(--error-color);
+    display: none;
+}
+.success-message {
+    color: var(--success-color);
 }
