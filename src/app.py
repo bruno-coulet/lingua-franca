@@ -16,7 +16,7 @@ app.config["SECRET_KEY"] = generate_secret_key(24)
 
 
 # Routes
-@app.route("/")
+@app.route("/", methods=["GET"])
 def index():
     form = TranslationForm()
     return render_template("index.html", form=form)
