@@ -5,15 +5,18 @@ from flask import Flask, jsonify, render_template, request
 from forms import TranslationForm
 from translation import detect_language, translate_text
 
+
 # Configuration
 # TODO : move to .env file and read
 DEBUG = True
 
+# Flask app
 app = Flask(__name__)
 app.config["SECRET_KEY"] = generate_secret_key(24)
 
 
-@app.route("/")
+# Routes
+@app.route("/", methods=["GET"])
 def index():
     form = TranslationForm()
     return render_template("index.html", form=form)
@@ -34,7 +37,8 @@ def detect():
         return jsonify({"status": "success",
                         "language": target_language}), 200
     else:
-        return jsonify({"status": "error", "errors": form.errors}), 400
+        errors = {field.replace("_", "-"): error for field, error in form.errors.items()}
+        return jsonify({"status": "error", "errors": errors}), 400
 
 
 @app.route("/translate", methods=["POST"])
@@ -59,5 +63,6 @@ def translate():
                         "errors": form.errors}), 400
 
 
+# Run
 if __name__ == "__main__":
     app.run(debug=DEBUG)

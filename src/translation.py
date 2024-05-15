@@ -1,5 +1,6 @@
 from googletrans import LANGUAGES, Translator
 
+
 TRANSLATOR = Translator()
 
 

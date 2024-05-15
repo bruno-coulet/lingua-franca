@@ -26,23 +26,15 @@ export const FormUtils = {
      * @param {Object} errors - An object containing the errors
      * @param {HTMLElement} defaultParentElement - The default parent element to append the error message if errorField is not found
      * @param {string} errorMessageClass - The class name of the error message (default is "error-message")
-     * @param {string} errorFieldSuffix - The suffix of the error field (default is "-error")
      */
-    displayErrors: function(errors, defaultParentElement, errorMessageClass="error-message", errorFieldSuffix="-error") {
-        const errorFields = document.querySelectorAll(`.${errorMessageClass}`);
-
-        errorFields.forEach(field => field.textContent = '');
+    displayErrors: function(errors, parentElement, errorMessageClass="error-message") {
+        parentElement.innerHTML = "";
         for (const fieldName in errors) {
-            const errorField = document.getElementById(`${fieldName}${errorFieldSuffix}`);
-            if (errorField) {
-                errorField.textContent = errors[fieldName];
-            }
-            else {
-                const errorMessage = document.createElement("p");
-                errorMessage.classList.add(errorMessageClass);
-                errorMessage.textContent = errors[fieldName];
-                defaultParentElement.appendChild(errorMessage);
-            };
+            const errorMessage = document.createElement("p");
+            errorMessage.classList.add(errorMessageClass);
+            errorMessage.textContent = errors[fieldName];
+            errorMessage.style.display = "block";
+            parentElement.appendChild(errorMessage);
         };
     }
 };

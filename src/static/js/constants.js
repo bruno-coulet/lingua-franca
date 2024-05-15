@@ -16,6 +16,8 @@ export const DomElements = {
     translationForm: document.getElementById('translation-form'),
     translatedText: document.getElementById('translated-text'),
     resultMessagesWrapper: document.getElementById('result-messages-wrapper'),
+    reverseLanguagesButton: document.getElementById('reverse-languages-button'),
+    loadingSpinner: document.getElementById('loading-spinner'),
 }
 
 
