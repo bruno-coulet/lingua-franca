@@ -96,3 +96,8 @@ main {
 .success-message {
     color: var(--success-color);
 }
+
+#text-to-translate-wrapper > label,
+#translated-text-wrapper > label {
+    display: none;
+}
