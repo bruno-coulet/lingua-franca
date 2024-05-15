@@ -4,15 +4,15 @@ import { FormUtils } from './utils.js';
 
 
 function submitTranslationForm() {
+    
+    // Reset messages
+    DomElements.translatedText.value = '';
+    DomElements.resultMessagesWrapper.innerHTML = '';
+    DomElements.loadingSpinner.textContent = '🔄';
+
     if (!DomElements.translationForm.checkValidity()) {
         return;
     }
-    // Reset messages
-    DomElements.translatedText.textContent = '';
-    DomElements.resultMessagesWrapper.innerHTML = '';
-    DomElements.loadingSpinner.textContent = '🔄'; // TODO : Add loading spinner
-    document.querySelectorAll(".error-message").forEach(el => el.style.display = "none");
-
     // Detect languages
     const formData = new FormData(DomElements.translationForm);
     AjaxFunctions.detectLanguage(formData)
@@ -21,29 +21,44 @@ function submitTranslationForm() {
         // Translate
         AjaxFunctions.translate(detectedformData)
         .then(data => {
-            DomElements.translatedText.value = data.translated_text;
             DomElements.loadingSpinner.textContent = '✅';
+            DomElements.translatedText.value = data.translated_text;
         })
         .catch(error => {
-            DomElements.loadingSpinner.textContent = '❎';
             const errors = JSON.parse(error.message);
             FormUtils.displayErrors(errors, DomElements.resultMessagesWrapper);
+            DomElements.loadingSpinner.textContent = '❎';
         })
     }).catch(error => {
-        
-        DomElements.loadingSpinner.textContent = '❎';
-        console.log(error)
         const errors = JSON.parse(error.message);
-        console.log(errors)
         FormUtils.displayErrors(errors, DomElements.resultMessagesWrapper);
+        DomElements.loadingSpinner.textContent = '❎';
     })
 }
 
+function addFormChangeListeners() {
+    DomElements.translationForm.addEventListener('change', (event) => {
+        submitTranslationForm();
+    })
 
+    const textAreas = DomElements.translationForm.querySelectorAll('textarea');
+    let deboundDelay;
+
+    textAreas.forEach(textArea => {
+        textArea.addEventListener('input', (event) => {
+            clearTimeout(deboundDelay); // Clear the previous delay
+            deboundDelay = setTimeout(() => {
+                submitTranslationForm();
+            }, 500);
+        });
+    });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     DomElements.translationForm.addEventListener('submit', (event) => {
         event.preventDefault();
             submitTranslationForm();
     })
+
+    addFormChangeListeners();
 })
