@@ -12,30 +12,38 @@
 
 <body>
     <div class="container">
-        <h1>Translator app</h1>
-        <div class="translator">
-            <form method="POST">
-                <label for="language">language of the text to be translated:</label>
-                <select name="language1" class="form-control" id="language1">
-                    <option value="auto">auto</option>
-                    {% for code,language in data %}
-                    <option value="{{code}}" {% if lang1 == code %}selected{% endif %}>{{ language }}</option>
-                    {% endfor %}
-                </select>
-                <textarea name="text1" id="sourceText" placeholder="Enter text to translate">{{text_to_translate}}</textarea>
-                    <label for="language">Language:</label>
-                    <select name="language2" class="form-control" id="language2">
-                        <option value="">select a language</option>
-                        {% for code,language in data %}
-                        <option value="{{code}}"{% if lang2 == code %}selected{% endif %}>{{ language }}</option>
-                        {% endfor %}
-                    </select>
-                    <textarea name="text2" id="targetText" placeholder="Translation will appear here" readonly>{{text_translated}}</textarea>
+        <h2>Translator app</h2>
+            <form class="translator" method="POST">
+                <div class="flexForm">
+                    <div class="formLeftSection">
+                        <div class="infoLeftSection">
+                            <label for="language">language of the text to be translated :</label>
+                            <select name="language1" class="formControl" id="language1">
+                                <option value="auto">auto</option>
+                                {% for code,language in data %}
+                                <option value="{{code}}" {% if lang1 == code %}selected{% endif %}>{{ language }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <textarea name="text1" id="sourceText" placeholder="Enter text to translate">{{text_to_translate}}</textarea>
+                    </div>
+                    <div class="formRightSection">
+                        <div class="infoRightSection">
+                            <label for="language">language of the translated text :</label>
+                            <select name="language2" class="formControl" id="language2">
+                                <option value="">select a language</option>
+                                {% for code,language in data %}
+                                <option value="{{code}}"{% if lang2 == code %}selected{% endif %}>{{ language }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <textarea name="text2" id="targetText" placeholder="Translation will appear here" readonly>{{text_translated}}</textarea>
+                    </div>
+                </div>
                 <div>
                     <button type="submit" class="btn-success" id="translateButton">Translate</button>
                 </div>
             </form>
-        </div>
     </div>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
