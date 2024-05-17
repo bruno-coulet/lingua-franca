@@ -1,19 +1,19 @@
 import { DomElements } from './constants.js';
 import { AjaxFunctions } from './ajaxFunctions.js';
-import { FormUtils } from './utils.js';
+import { FormUtils, ImgUtils } from './utils.js';
 import { languageToCountryMap } from './mapCountries.js';
 
 
 function submitTranslationForm() {
     // TODO : séparer les 2 requetes (detect et translate)
     // Reset messages
-    DomElements.translatedText.value = '';
+    DomElements.translatedText.value = '🔄...';
     DomElements.resultMessagesWrapper.innerHTML = '';
-    DomElements.loadingSpinner.textContent = '🔄';
+    ImgUtils.displayIcon(DomElements.statusIcon, '/static/images/status/loading.png');
 
     const form = DomElements.translationForm
     if (!form.checkValidity()) {
-
+        // TODO : sortir si l'erreur est que le champs est vide
         // Iterate on invalid fields
         const errors = {};
         form.querySelectorAll(':invalid').forEach(field => {
@@ -37,14 +37,18 @@ function submitTranslationForm() {
         // Translate
         AjaxFunctions.translate(detectedformData)
         .then(data => {
-            DomElements.loadingSpinner.textContent = '✅';
+            ImgUtils.displayIcon(DomElements.statusIcon, '/static/images/status/success.png');
             DomElements.translatedText.value = data.translated_text;
         })
         .catch(error => {
+            console.log("translate error", error)
+            DomElements.translatedText.value = ""
             const errors = JSON.parse(error.message);
             FormUtils.displayErrors(errors, DomElements.resultMessagesWrapper);
         })
     }).catch(error => {
+        console.log("detection error", error)
+        DomElements.translatedText.value = ""
         const errors = JSON.parse(error.message);
         FormUtils.displayErrors(errors, DomElements.resultMessagesWrapper);
     })
@@ -98,9 +102,21 @@ function reverseLanguages() {
 }
 
 
+function enableDisableReverseLanguages() {
+    
+    if (DomElements.sourceLanguageSelect.value === "auto") {
+        DomElements.reverseLanguagesButton.disabled = true;
+    } else {
+        DomElements.reverseLanguagesButton.disabled = false;
+    }
+    window.requestAnimationFrame(() => {});
+}
+
+
 function addFormChangeListeners() {
     DomElements.translationForm.addEventListener('change', (event) => {
         submitTranslationForm();
+        enableDisableReverseLanguages();
     })
 
     const textAreas = DomElements.translationForm.querySelectorAll('textarea');
@@ -111,6 +127,7 @@ function addFormChangeListeners() {
             clearTimeout(deboundDelay); // Clear the previous delay
             deboundDelay = setTimeout(() => {
                 submitTranslationForm();
+                enableDisableReverseLanguages()
             }, 500);
         });
     });
@@ -118,6 +135,9 @@ function addFormChangeListeners() {
 
 function changeFlag(select) {
     const img = document.getElementById(`${select.id}-flag-icon`)
+    if (select.value === "auto") {
+        img.src = `/static/images/auto_language.png`
+    }
     img.src = `https://flagsapi.com/${languageToCountryMap[select.value]}/shiny/32.png`
 }
 
@@ -126,6 +146,7 @@ function init() {
     DomElements.translationForm.addEventListener('submit', (event) => {
         event.preventDefault();
         submitTranslationForm();
+        enableDisableReverseLanguages();
     });
     addFormChangeListeners();
     DomElements.reverseLanguagesButton.addEventListener('click', reverseLanguages);

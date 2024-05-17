@@ -38,6 +38,15 @@ export const FormUtils = {
             errorMessage.style.display = "block";
             parentElement.appendChild(errorMessage);
         };
-        DomElements.loadingSpinner.textContent = "❎";
+        ImgUtils.displayIcon(DomElements.statusIcon, "/static/images/status/error.png");
     }
 };
+
+
+export const ImgUtils = {
+
+    displayIcon: (element, src) => {
+        element.src = src;
+        element.style.display = "block";
+    }
+}
