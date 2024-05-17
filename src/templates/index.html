@@ -19,15 +19,23 @@
             <h2>Text translation</h2>
             <form id="translation-form">
                 {{ form.csrf_token() }}
-                {% for field in form if field.widget.input_type != 'hidden' %}
-                <div class="field-wrapper" id="{{ field.id }}-wrapper">
-                    {{ field.label }}
-                    {{ field }}
-                </div>
+                    {% for field in form if field.widget.input_type != 'hidden' %}
+                    <div class="field-wrapper" id="{{ field.id }}-wrapper">
+                        {{ field.label }}
+                        {% if field.name == 'source_language' or field.name == 'target_language'%}
+                            <div class="select-wrapper">
+                                <!-- TODO : basculer la taille dans le CSS -->
+                                <img width=25 id="{{ field.id }}-flag-icon" alt="Flag icon" src="https://flagsapi.com/AUTO/shiny/32.png">
+                                {{ field }}
+                            </div>
+                        {% else %}
+                            {{ field }}
+                        {% endif %}
+
+                    </div>
                 {% endfor %}
-    
                 <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
-                <button id="reverse-languages" type="button">↔️</button>
+                <button id="reverse-languages-button" type="button">↔️</button>
                 <div id="loading-spinner"><!-- Loading spinner generated here --></div>
                 
             </form>

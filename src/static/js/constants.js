@@ -18,6 +18,8 @@ export const DomElements = {
     resultMessagesWrapper: document.getElementById('result-messages-wrapper'),
     reverseLanguagesButton: document.getElementById('reverse-languages-button'),
     loadingSpinner: document.getElementById('loading-spinner'),
+    sourceLanguageSelect: document.getElementById('source-language'),
+    targetLanguageSelect: document.getElementById('target-language'),
 }
 
 

@@ -28,9 +28,15 @@ main {
     gap: 5px;
 }
 
+.select-wrapper {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
 /* Grid */
 #translation-form {
-    width: 60%;
+    width: 50%;     
     margin: 0 auto;
     gap: 10px;
     display: grid;
@@ -84,10 +90,6 @@ main {
     grid-area: result-messages-wrapper;
 }
 
-/* TODO : remove submit button */
-#submit-button {
-    grid-area: submit-button;
-}
 
 .error-message {
     color: var(--error-color);
