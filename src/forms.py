@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from markupsafe import Markup
 from wtforms import SelectField, TextAreaField
 from wtforms.validators import DataRequired
 
@@ -31,4 +32,4 @@ class TranslationForm(FlaskForm):
         super().__init__(*args, **kwargs)
         available_languages = list_languages()
         self.source_language.choices = [("auto", "Automatic Detection")] + available_languages
-        self.target_language.choices = [("", "Select a target language")] + available_languages
+        self.target_language.choices = available_languages
