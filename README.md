@@ -45,6 +45,8 @@ Translator Flask app using Google Translate API
             - **script.js** : Main JS script
                 - `submitTranslationForm(formData)` : Submit the form to the backend and modify display with the response
                 - `addFormSubmitListener()` : Add an event listener on the form submit event to call `submitTranslationForm()`
+            - **mapCountries.js** : Map languages and countries
+                - `languageToCountryMap` : Object to map countries with languages
         - **css/** : CSS files
             - **normalize.css** : To normalize styles
             - **variables.css** : Variables (Colors ...)
