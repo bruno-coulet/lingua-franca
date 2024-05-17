@@ -1,5 +1,7 @@
 // Contains utility functions namespaces
 
+import { DomElements } from "./constants.js";
+
 /**
  * Form utils
  * @namespace
@@ -36,5 +38,6 @@ export const FormUtils = {
             errorMessage.style.display = "block";
             parentElement.appendChild(errorMessage);
         };
+        DomElements.loadingSpinner.textContent = "❎";
     }
 };
