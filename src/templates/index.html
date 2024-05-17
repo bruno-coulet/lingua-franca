@@ -4,9 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Translator</title>
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- JS -->
     <script type="module" src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </head>
 <body>
@@ -16,29 +25,31 @@
             <h1>Welcome to our translation app</h1>
         </header>
         <main>
-            <h2>Text translation</h2>
-            <form id="translation-form">
-                {{ form.csrf_token() }}
-                    {% for field in form if field.widget.input_type != 'hidden' %}
-                    <div class="field-wrapper" id="{{ field.id }}-wrapper">
-                        {{ field.label }}
-                        {% if field.name == 'source_language' or field.name == 'target_language'%}
-                            <div class="select-wrapper">
-                                <!-- TODO : basculer la taille dans le CSS -->
-                                <img width=25 id="{{ field.id }}-flag-icon" src="https://flagsapi.com/AUTO/shiny/32.png">
+            <div class="content">
+                <h2>Let's translate !</h2>
+                <form id="translation-form">
+                    {{ form.csrf_token() }}
+                        {% for field in form if field.widget.input_type != 'hidden' %}
+                        <div class="field-wrapper" id="{{ field.id }}-wrapper">
+                            <h5 class="label">{{ field.label }}</h5>
+                            {% if field.name == 'source_language' or field.name == 'target_language'%}
+                                <div class="select-wrapper">
+                                    <!-- TODO : basculer la taille dans le CSS -->
+                                    <img height="30" id="{{ field.id }}-flag-icon" src="{{ url_for('static', filename='images/auto_language.png') }}">
+                                    {{ field }}
+                                </div>
+                            {% else %}
                                 {{ field }}
-                            </div>
-                        {% else %}
-                            {{ field }}
-                        {% endif %}
-
-                    </div>
-                {% endfor %}
-                <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
-                <button id="reverse-languages-button" type="button">↔️</button>
-                <div id="loading-spinner"><!-- Loading spinner generated here --></div>
-                
-            </form>
+                            {% endif %}
+    
+                        </div>
+                    {% endfor %}
+                    <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
+                    <button id="reverse-languages-button" type="button" disabled    >↔️</button>
+                    <img id="status-icon">
+                </form>
+            </div>
+            
         </main>
     </div>
     

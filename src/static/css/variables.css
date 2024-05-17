@@ -1,23 +1,35 @@
 /* Definition of color variables */
 :root {
     /* Primary colors */
-    --primary-color: #007bff; /* Blue */
-    --secondary-color: #6c757d; /* Gray */
+    --primary-color: rgba(228, 201, 169, 0.8);
+    --secondary-color: rgb(179, 193, 197);
   
+
     /* Background colors */
-    --background-color: #f8f9fa; /* Light gray */
-    --surface-color: #ffffff; /* White */
+    --background-color: rgba(202, 217, 210, 0.8);
+    --surface-color: #f5eaea;
+    --header-background-color: rgb(202, 217, 210);
+    --input-background-color: rgba(228, 201, 169, 0.8);
+    --input-hover-background-color: rgb(228, 201, 169);
+
+    /* Shadow colors */
+    --shadow-color: rgba(0, 0, 0, 0.5);
   
+
+    /* Border colors */
+    --border-color: rgba(0, 0, 0, 0.5);
     /* Text colors */
-    --text-color: #212529; /* Black */
-    --accent-color: #dc3545; /* Red */
+    --text-color: #564D48;
+    --accent-color: #dc3545;
+    --header-color: #5D5551;
   
+
     /* Accent colors */
-    --accent1-color: #28a745; /* Green */
-    --accent2-color: #ffc107; /* Yellow */
+    --accent1-color: #28a745;
+    --accent2-color: #ffc107;
     
     /* State colors */
-    --success-color: #28a745; /* Green */
-    --error-color: #dc3545; /* Red */
-    --warning-color: #ffc107; /* Yellow */
+    --success-color: #28a745;
+    --error-color: #dc3545;
+    --warning-color: #ffc107;
 }
