@@ -5,7 +5,7 @@ import { languageToCountryMap } from './mapCountries.js';
 
 
 function submitTranslationForm() {
-    
+    // TODO : séparer les 2 requetes (detect et translate)
     // Reset messages
     DomElements.translatedText.value = '';
     DomElements.resultMessagesWrapper.innerHTML = '';
