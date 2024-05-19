@@ -14,8 +14,8 @@ function submitTranslationForm() {
         return;
     }
     // Reset messages
-    DomElements.translatedText.placeholder = '🔄...';
     DomElements.resultMessagesWrapper.innerHTML = '';
+    DomElements.translatedText.placeholder = '🔄...';
     ImgUtils.displayIcon(DomElements.statusIcon, '/static/images/status/loading.png');
    
     if (!DomElements.translationForm.checkValidity()) {
@@ -63,7 +63,7 @@ function submitTranslationForm() {
 }
 
 
-function reverseLanguages() {    
+function reverseLanguages() {
     const form = DomElements.translationForm;
     const sourceLanguageSelect = form.querySelector("#source-language");
     const targetLanguageSelect = form.querySelector("#target-language");
@@ -122,22 +122,24 @@ function enableDisableReverseLanguages() {
 
 
 function addFormChangeListeners() {
-    DomElements.translationForm.addEventListener('change', (event) => {
-        enableDisableReverseLanguages();
-        if (DomElements.textToTranslate.value !== "") {
-            submitTranslationForm();
-        }
-    })
-
+    
     let deboundDelay;
 
-    DomElements.textToTranslate.addEventListener('input', (event) => {
-        clearTimeout(deboundDelay); // Clear the previous delay
+    DomElements.translationForm.addEventListener('change', (event) => {
+        clearTimeout(deboundDelay);
         deboundDelay = setTimeout(() => {
             enableDisableReverseLanguages();
             submitTranslationForm();
         }, 500);
-        });
+    })
+
+    DomElements.textToTranslate.addEventListener('input', (event) => {
+        clearTimeout(deboundDelay);
+        deboundDelay = setTimeout(() => {
+            enableDisableReverseLanguages();
+            submitTranslationForm();
+        }, 500);
+    });
     
 }
 
