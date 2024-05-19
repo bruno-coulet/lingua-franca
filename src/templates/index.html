@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Translator</title>
 
+    <!-- ICON -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.ico') }}">
+
     <!-- FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     
     <!-- CSS -->
@@ -21,7 +24,7 @@
 <body>
     <div class="container">
         <header>
-            <!-- TODO : Do a real header and navigation -->
+            <!-- TODO : Do a real header and navigation  -->
             <h1>Welcome to our translation app</h1>
         </header>
         <main>
@@ -45,7 +48,10 @@
                         </div>
                     {% endfor %}
                     <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
-                    <button id="reverse-languages-button" type="button" disabled    >↔️</button>
+                    <button id="reverse-languages-button" type="button" disabled>
+                        <!-- TODO : Déplacer la taille dans le CSS -->
+                        <img width="30" src="{{ url_for('static', filename='images/reverse_languages.png ') }}" alt="Reverse languages">
+                    </button>
                     <img id="status-icon">
                 </form>
             </div>
