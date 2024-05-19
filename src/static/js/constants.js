@@ -15,6 +15,7 @@
 export const DomElements = {
     translationForm: document.getElementById('translation-form'),
     translatedText: document.getElementById('translated-text'),
+    textToTranslate: document.getElementById('text-to-translate'),
     resultMessagesWrapper: document.getElementById('result-messages-wrapper'),
     reverseLanguagesButton: document.getElementById('reverse-languages-button'),
     statusIcon: document.getElementById('status-icon'),

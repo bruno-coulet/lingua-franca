@@ -44,7 +44,7 @@ main {
 }
 
 .content {
-    padding: 0 30px;
+    padding: 40px 80px; 
 
     -webkit-box-shadow: 0 4px 30px var(--shadow-color);
     -moz-box-shadow: 0 4px 30px var(--shadow-color);
@@ -74,6 +74,7 @@ main {
 /* Grid */
 #translation-form {
     width: 50%;
+    height: 60%;    
     margin: auto auto;
     gap: 10px;
     display: grid;

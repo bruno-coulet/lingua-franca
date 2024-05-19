@@ -6,17 +6,23 @@ import { languageToCountryMap } from './mapCountries.js';
 
 function submitTranslationForm() {
     // TODO : séparer les 2 requetes (detect et translate)
+    if (DomElements.textToTranslate.value === "") {
+        DomElements.statusIcon.style.display = "none";
+        DomElements.translatedText.value = "";
+        DomElements.resultMessagesWrapper.innerHTML = "";
+        DomElements.translatedText.placeholder = "Translated text";
+        return;
+    }
     // Reset messages
-    DomElements.translatedText.value = '🔄...';
+    DomElements.translatedText.placeholder = '🔄...';
     DomElements.resultMessagesWrapper.innerHTML = '';
     ImgUtils.displayIcon(DomElements.statusIcon, '/static/images/status/loading.png');
-
-    const form = DomElements.translationForm
-    if (!form.checkValidity()) {
+   
+    if (!DomElements.translationForm.checkValidity()) {
         // TODO : sortir si l'erreur est que le champs est vide
         // Iterate on invalid fields
         const errors = {};
-        form.querySelectorAll(':invalid').forEach(field => {
+        DomElements.translationForm.querySelectorAll(':invalid').forEach(field => {
 
             // Display error message for each field
             const label = field.labels[0];
@@ -29,26 +35,30 @@ function submitTranslationForm() {
         return;
     }
     // Detect languages
-    const formData = new FormData(form);
+    const formData = new FormData(DomElements.translationForm);
     AjaxFunctions.detectLanguage(formData)
     .then(detectedformData => {
-        DomElements.sourceLanguageSelect.dispatchEvent(new Event('change'));
-        FormUtils.updateFormFields(form, detectedformData);
-        // Translate
-        AjaxFunctions.translate(detectedformData)
-        .then(data => {
-            ImgUtils.displayIcon(DomElements.statusIcon, '/static/images/status/success.png');
-            DomElements.translatedText.value = data.translated_text;
-        })
-        .catch(error => {
-            console.log("translate error", error)
-            DomElements.translatedText.value = ""
-            const errors = JSON.parse(error.message);
-            FormUtils.displayErrors(errors, DomElements.resultMessagesWrapper);
-        })
+        if (detectedformData.get("text_to_translate") !== "") {
+            DomElements.sourceLanguageSelect.dispatchEvent(new Event('change'));
+            FormUtils.updateFormFields(DomElements.translationForm  , detectedformData);
+            // Translate
+            AjaxFunctions.translate(detectedformData)
+            .then(data => {
+                ImgUtils.displayIcon(DomElements.statusIcon, '/static/images/status/success.png');
+                DomElements.translatedText.value = data.translated_text;
+                //enableDisableReverseLanguages();
+            
+            })
+            .catch(error => {
+                console.log("translate error", error)
+                DomElements.translatedText.placeholder = "Translated text";
+                const errors = JSON.parse(error.message);
+                FormUtils.displayErrors(errors, DomElements.resultMessagesWrapper);
+            })
+        }
     }).catch(error => {
         console.log("detection error", error)
-        DomElements.translatedText.value = ""
+        DomElements.translatedText.placeholder = "Translated text";
         const errors = JSON.parse(error.message);
         FormUtils.displayErrors(errors, DomElements.resultMessagesWrapper);
     })
@@ -103,7 +113,7 @@ function reverseLanguages() {
 
 
 function enableDisableReverseLanguages() {
-    
+    // TODO : gérer le raffraichissement automatique
     if (DomElements.sourceLanguageSelect.value === "auto") {
         DomElements.reverseLanguagesButton.disabled = true;
     } else {
@@ -115,22 +125,22 @@ function enableDisableReverseLanguages() {
 
 function addFormChangeListeners() {
     DomElements.translationForm.addEventListener('change', (event) => {
-        submitTranslationForm();
         enableDisableReverseLanguages();
+        if (DomElements.textToTranslate.value !== "") {
+            submitTranslationForm();
+        }
     })
 
-    const textAreas = DomElements.translationForm.querySelectorAll('textarea');
     let deboundDelay;
 
-    textAreas.forEach(textArea => {
-        textArea.addEventListener('input', (event) => {
-            clearTimeout(deboundDelay); // Clear the previous delay
-            deboundDelay = setTimeout(() => {
-                submitTranslationForm();
-                enableDisableReverseLanguages()
-            }, 500);
+    DomElements.textToTranslate.addEventListener('input', (event) => {
+        clearTimeout(deboundDelay); // Clear the previous delay
+        deboundDelay = setTimeout(() => {
+            enableDisableReverseLanguages();
+            submitTranslationForm();
+        }, 500);
         });
-    });
+    
 }
 
 function changeFlag(select) {
@@ -146,7 +156,6 @@ function init() {
     DomElements.translationForm.addEventListener('submit', (event) => {
         event.preventDefault();
         submitTranslationForm();
-        enableDisableReverseLanguages();
     });
     addFormChangeListeners();
     DomElements.reverseLanguagesButton.addEventListener('click', reverseLanguages);
