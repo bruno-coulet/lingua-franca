@@ -44,7 +44,6 @@ export const FormUtils = {
 
 
 export const ImgUtils = {
-
     displayIcon: (element, src) => {
         element.src = src;
         element.style.display = "block";
