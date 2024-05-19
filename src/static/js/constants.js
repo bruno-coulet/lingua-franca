@@ -15,9 +15,10 @@
 export const DomElements = {
     translationForm: document.getElementById('translation-form'),
     translatedText: document.getElementById('translated-text'),
+    textToTranslate: document.getElementById('text-to-translate'),
     resultMessagesWrapper: document.getElementById('result-messages-wrapper'),
     reverseLanguagesButton: document.getElementById('reverse-languages-button'),
-    loadingSpinner: document.getElementById('loading-spinner'),
+    statusIcon: document.getElementById('status-icon'),
     sourceLanguageSelect: document.getElementById('source-language'),
     targetLanguageSelect: document.getElementById('target-language'),
 }

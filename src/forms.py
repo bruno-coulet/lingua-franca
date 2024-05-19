@@ -21,7 +21,7 @@ class TranslationForm(FlaskForm):
                                       id="text-to-translate",
                                       render_kw={"placeholder": "Enter text to translate ...",
                                                  "cols": 50, "rows": 15},
-                                      validators=[DataRequired("Please enter text to translate")])
+                                      validators=[DataRequired("Type something to translate")])
     text_translated = TextAreaField("Text translated",
                                     id="translated-text",
                                     render_kw={"placeholder": "Translated text", 
