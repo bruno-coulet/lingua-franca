@@ -50,11 +50,11 @@ main {
     -moz-box-shadow: 0 4px 30px var(--shadow-color);
     box-shadow: 0 4px 30px var(--shadow-color);
 
-    background: var(--background-color);
+    background-color: var(--background-color);
     border-radius: 16px;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(0.8px);
-    border: 1px solid rgba(255, 202, 165, 1);
+    border: 1px solid var(--border-color);
 }
 
 
@@ -147,7 +147,7 @@ main {
 
 
 /* Appliquer les styles aux éléments de formulaire */
-input, select, textarea, button {
+input, select, textarea {
     font-family: 'Roboto', sans-serif;
     color: var(--text-color);
     background-color: var(--input-background-color);
@@ -156,7 +156,7 @@ input, select, textarea, button {
     border-radius: 8px;
 }
 
-input:hover, select:hover, textarea:hover, button:hover, option:hover, input:focus, select:focus, textarea:focus, button:focus, option:focus {
+input:hover, select:hover, textarea:hover, option:hover, input:focus, select:focus, textarea:focus, option:focus {
     background-color: var(--input-hover-background-color);
 }
 
@@ -174,9 +174,21 @@ textarea {
 }
 
 button {
+    background-color: var(--button-background-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 8px;
+    border-radius: 8px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
     height: 50px;
     width: 50px;
+}
+
+button:hover, button:focus {
+    background-color: var(--button-hover-background-color);
 }
 
 button:disabled {

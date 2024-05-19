@@ -1,35 +1,25 @@
 /* Definition of color variables */
 :root {
-    /* Primary colors */
-    --primary-color: rgba(228, 201, 169, 0.8);
-    --secondary-color: rgb(179, 193, 197);
-  
-
     /* Background colors */
     --background-color: rgba(202, 217, 210, 0.8);
-    --surface-color: #f5eaea;
-    --header-background-color: rgb(202, 217, 210);
+    --header-background-color: rgba(202, 217, 210, 1);
     --input-background-color: rgba(228, 201, 169, 0.8);
-    --input-hover-background-color: rgb(228, 201, 169);
-
-    /* Shadow colors */
-    --shadow-color: rgba(0, 0, 0, 0.5);
-  
-
-    /* Border colors */
-    --border-color: rgba(0, 0, 0, 0.5);
+    --input-hover-background-color: rgba(228, 201, 169, 1);
+    --button-background-color: rgba(228, 201, 169, 0.8);
+    --button-hover-background-color: rgb(228, 201, 169, 1);
+    
     /* Text colors */
     --text-color: #564D48;
     --accent-color: #dc3545;
     --header-color: #5D5551;
-  
-
-    /* Accent colors */
-    --accent1-color: #28a745;
-    --accent2-color: #ffc107;
     
     /* State colors */
     --success-color: #28a745;
     --error-color: #dc3545;
-    --warning-color: #ffc107;
+
+    /* Shadow color */
+    --shadow-color: rgba(0, 0, 0, 0.5);
+  
+    /* Border color */
+    --border-color: rgba(0, 0, 0, 1);
 }
