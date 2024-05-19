@@ -24,7 +24,6 @@
 <body>
     <div class="container">
         <header>
-            <!-- TODO : Do a real header and navigation  -->
             <h1>Welcome to our translation app</h1>
         </header>
         <main>
@@ -37,8 +36,7 @@
                             <h5 class="label">{{ field.label }}</h5>
                             {% if field.name == 'source_language' or field.name == 'target_language'%}
                                 <div class="select-wrapper">
-                                    <!-- TODO : basculer la taille dans le CSS -->
-                                    <img height="30" id="{{ field.id }}-flag-icon" src="{{ url_for('static', filename='images/auto_language.png') }}">
+                                    <img class="flag-icon" id="{{ field.id }}-flag-icon" src="{{ url_for('static', filename='images/auto_language.png') }}">
                                     {{ field }}
                                 </div>
                             {% else %}
@@ -49,8 +47,7 @@
                     {% endfor %}
                     <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
                     <button id="reverse-languages-button" type="button" disabled>
-                        <!-- TODO : Déplacer la taille dans le CSS -->
-                        <img width="30" src="{{ url_for('static', filename='images/reverse_languages.png ') }}" alt="Reverse languages">
+                        <img id="reverse-languages-icon" width="30" src="{{ url_for('static', filename='images/reverse_languages.png ') }}" alt="Reverse languages">
                     </button>
                     <img id="status-icon">
                 </form>

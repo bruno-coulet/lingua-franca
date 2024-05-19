@@ -85,10 +85,8 @@ main {
         "text-to-translate . translated-text"
         "text-to-translate status-icon translated-text"
         "text-to-translate . translated-text"
-        "result-messages-wrapper result-messages-wrapper result-messages-wrapper"
-        ". submit-button .";
+        "result-messages-wrapper result-messages-wrapper result-messages-wrapper";
 
-        /* TODO : remove submit button */
     justify-content: center;
     align-items: center;
 }
@@ -195,4 +193,12 @@ button:hover, button:focus {
 button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+ /* height="30" */
+.flag-icon {
+    height: 32px;
+}
+
+#reverse-languages-icon {
+    width: 30px;
 }

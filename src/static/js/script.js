@@ -19,11 +19,9 @@ function submitTranslationForm() {
     ImgUtils.displayIcon(DomElements.statusIcon, '/static/images/status/loading.png');
    
     if (!DomElements.translationForm.checkValidity()) {
-        // TODO : sortir si l'erreur est que le champs est vide
         // Iterate on invalid fields
         const errors = {};
         DomElements.translationForm.querySelectorAll(':invalid').forEach(field => {
-
             // Display error message for each field
             const label = field.labels[0];
             const message = `${label.textContent} : ${field.validationMessage}`;
