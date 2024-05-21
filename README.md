@@ -5,21 +5,32 @@ Translator Flask app using Google Translate API
 - [lingua-franca](#lingua-franca)
   - [Table of content](#table-of-content)
   - [Getting started](#getting-started)
+    - [Install](#install)
+    - [Use](#use)
   - [Project files](#project-files)
 
 ## Getting started
+### Install
 - Open git bash
 - Clone the repository : `git clone https://github.com/christian-aucane/lingua-franca.git`
 - Move in the repo : `cd lingua-franca`
-- Run install.sh : `source install.sh`
+- Launch install.sh : `source scripts/install.sh`
+### Use
+- Open git bash
+- Launch run.sh : `source scripts/run.sh`
+- Open navigator and go to this URL : http://127.0.0.1:5000/
 
 ## Project files
 - **README.md** : Project details (this file)
 - **.gitignore** : Files ignored by Git
 - **requirements.txt** : Project dependencies
-- **install.sh** : Bash script to install project
-    - Create virtual environment
-    - Install dependencies
+- **scripts/** : Bash scripts
+    - **install.sh** : Install project
+        - Create virtual environment
+        - Install dependencies
+    - **run.sh** : Run server
+        - Activate virtual environment
+        - Run src/app.py
 - **src/** : Source files
     - **templates/** : Contain HTML templates
         - **index.html** : The interface
