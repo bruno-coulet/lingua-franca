@@ -29,7 +29,7 @@ def detect():
         text = form.text_to_translate.data
         target_language = detect_language(text)
         source_language = form.source_language.data
-
+        
         if source_language == target_language:
             return jsonify({"status": "error",
                             "errors": {"languages": "Source and target language must be different"}}), 400

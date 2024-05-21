@@ -3,9 +3,10 @@ import { AjaxFunctions } from './ajaxFunctions.js';
 import { FormUtils, ImgUtils } from './utils.js';
 import { languageToCountryMap } from './mapCountries.js';
 
-
+/**
+ * Handle form submission
+ */
 function submitTranslationForm() {
-    // TODO : séparer les 2 requetes (detect et translate)
     if (DomElements.textToTranslate.value === "") {
         DomElements.statusIcon.style.display = "none";
         DomElements.translatedText.value = "";
@@ -14,8 +15,8 @@ function submitTranslationForm() {
         return;
     }
     // Reset messages
-    DomElements.translatedText.placeholder = '🔄...';
     DomElements.resultMessagesWrapper.innerHTML = '';
+    DomElements.translatedText.placeholder = '🔄...';
     ImgUtils.displayIcon(DomElements.statusIcon, '/static/images/status/loading.png');
    
     if (!DomElements.translationForm.checkValidity()) {
@@ -37,19 +38,19 @@ function submitTranslationForm() {
     AjaxFunctions.detectLanguage(formData)
     .then(detectedformData => {
         if (detectedformData.get("text_to_translate") !== "") {
-            DomElements.sourceLanguageSelect.dispatchEvent(new Event('change'));
             FormUtils.updateFormFields(DomElements.translationForm  , detectedformData);
+            DomElements.sourceLanguageSelect.dispatchEvent(new Event('change'));
             // Translate
             AjaxFunctions.translate(detectedformData)
             .then(data => {
                 ImgUtils.displayIcon(DomElements.statusIcon, '/static/images/status/success.png');
                 DomElements.translatedText.value = data.translated_text;
-                //enableDisableReverseLanguages();
+                enableDisableReverseLanguages();
             
             })
             .catch(error => {
-                console.log("translate error", error)
                 DomElements.translatedText.placeholder = "Translated text";
+
                 const errors = JSON.parse(error.message);
                 FormUtils.displayErrors(errors, DomElements.resultMessagesWrapper);
             })
@@ -62,8 +63,10 @@ function submitTranslationForm() {
     })
 }
 
-
-function reverseLanguages() {    
+/**
+ * Reverse languages
+ */
+function reverseLanguages() {
     const form = DomElements.translationForm;
     const sourceLanguageSelect = form.querySelector("#source-language");
     const targetLanguageSelect = form.querySelector("#target-language");
@@ -89,7 +92,6 @@ function reverseLanguages() {
         if (autoOption) {
             autoOption.selected = true;
         }
-
     } else {
         sourceLanguageSelect.value = targetLanguage;
     }
@@ -109,10 +111,11 @@ function reverseLanguages() {
     submitTranslationForm();
 }
 
-
+/**
+ * Enable/disable reverse languages button
+ */
 function enableDisableReverseLanguages() {
-    // TODO : gérer le raffraichissement automatique
-    if (DomElements.sourceLanguageSelect.value === "auto") {
+        if (DomElements.sourceLanguageSelect.value === "auto") {
         DomElements.reverseLanguagesButton.disabled = true;
     } else {
         DomElements.reverseLanguagesButton.disabled = false;
@@ -120,35 +123,47 @@ function enableDisableReverseLanguages() {
     window.requestAnimationFrame(() => {});
 }
 
-
+/**
+ * Add form change listeners
+ */
 function addFormChangeListeners() {
-    DomElements.translationForm.addEventListener('change', (event) => {
-        enableDisableReverseLanguages();
-        if (DomElements.textToTranslate.value !== "") {
-            submitTranslationForm();
-        }
-    })
-
+    
     let deboundDelay;
-
-    DomElements.textToTranslate.addEventListener('input', (event) => {
-        clearTimeout(deboundDelay); // Clear the previous delay
+    DomElements.translationForm.addEventListener('change', (event) => {
+        clearTimeout(deboundDelay);
         deboundDelay = setTimeout(() => {
             enableDisableReverseLanguages();
             submitTranslationForm();
         }, 500);
-        });
+    })
+
+    DomElements.textToTranslate.addEventListener('input', (event) => {
+        clearTimeout(deboundDelay);
+        deboundDelay = setTimeout(() => {
+            enableDisableReverseLanguages();
+            submitTranslationForm();
+        }, 500);
+    });
     
 }
 
+/**
+ * Change the flag icon
+ * @param {HTMLSelectElement} select - The select element
+ */
 function changeFlag(select) {
     const img = document.getElementById(`${select.id}-flag-icon`)
     if (select.value === "auto") {
         img.src = `/static/images/auto_language.png`
     }
-    img.src = `https://flagsapi.com/${languageToCountryMap[select.value]}/shiny/32.png`
+    else {
+        img.src = `https://flagsapi.com/${languageToCountryMap[select.value]}/shiny/32.png`
+    }
 }
 
+/**
+ * Initialize
+ */
 function init() {
     // Events listeners
     DomElements.translationForm.addEventListener('submit', (event) => {

@@ -42,9 +42,17 @@ export const FormUtils = {
     }
 };
 
-
+/**
+ * Image utils
+ * @namespace
+ * @property {function} displayIcon - Display an icon
+ */
 export const ImgUtils = {
-
+    /**
+     * Display an icon
+     * @param {HTMLImageElement} element - The image element 
+     * @param {string} src - The source of the image
+     */
     displayIcon: (element, src) => {
         element.src = src;
         element.style.display = "block";

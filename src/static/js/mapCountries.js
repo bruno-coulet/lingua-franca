@@ -1,3 +1,6 @@
+/**
+ * Map languages codes to country codes
+ */
 const languageToCountryMap = {
     'af': 'ZA', // South Africa
     'sq': 'AL', // Albania
