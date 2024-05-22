@@ -4,10 +4,37 @@ Translator Flask app using Google Translate API
 ## Table of content
 - [lingua-franca](#lingua-franca)
   - [Table of content](#table-of-content)
+  - [The team](#the-team)
   - [Getting started](#getting-started)
     - [Install](#install)
     - [Use](#use)
   - [Project files](#project-files)
+
+## The team
+3 students in the 1st year of the Bachelor IT program specializing in Artificial Intelligence at [La Plateforme_](https://laplateforme.io/) in Marseille, France
+
+- Christian Aucane
+  <a href="https://www.linkedin.com/in/christian-aucane/">
+    <img src="images/logos/linkedin.png" width=25>
+  </a>
+  <a href="https://github.com/christian-aucane">
+    <img src="images/logos/github.png" width=25>
+  </a>
+- Bruno Coulet
+  <a href="https://www.linkedin.com/in/bruno-coulet/">
+    <img src="images/logos/linkedin.png" width=25>
+  </a>
+  <a href="https://github.com/bruno-coulet">
+    <img src="images/logos/github.png" width=25>
+  </a>
+
+- Léo Carrey
+  <a href="https://www.linkedin.com/in/leo-carrey/">
+    <img src="images/logos/linkedin.png" width=25>
+  </a>
+  <a href="https://github.com/leo-carrey/">
+    <img src="images/logos/github.png" width=25>
+  </a>
 
 ## Getting started
 ### Install
