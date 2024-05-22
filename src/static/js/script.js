@@ -52,12 +52,14 @@ function submitTranslationForm() {
             .catch(error => {
                 DomElements.translatedText.placeholder = "Translated text";
                 const errors = JSON.parse(error.message);
+                enableDisableReverseLanguages();
                 FormUtils.displayErrors(errors, DomElements.resultMessagesWrapper);
             })
         }
     }).catch(error => {
         DomElements.translatedText.placeholder = "Translated text";
         const errors = JSON.parse(error.message);
+        enableDisableReverseLanguages();
         FormUtils.displayErrors(errors, DomElements.resultMessagesWrapper);
     })
 }
@@ -114,7 +116,7 @@ function reverseLanguages() {
  * Enable/disable reverse languages button
  */
 function enableDisableReverseLanguages() {
-        if (DomElements.sourceLanguageSelect.value === "auto") {
+        if (DomElements.sourceLanguageSelect.value === "auto" || DomElements.targetLanguageSelect.value === DomElements.sourceLanguageSelect.value) {
         DomElements.reverseLanguagesButton.disabled = true;
     } else {
         DomElements.reverseLanguagesButton.disabled = false;
