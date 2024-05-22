@@ -1,5 +1,5 @@
 # lingua-franca
-Translator Flask app using Google Translate API
+![Illustration](images/illustration.png)
 
 ## Table of content
 - [lingua-franca](#lingua-franca)
@@ -7,7 +7,12 @@ Translator Flask app using Google Translate API
   - [Getting started](#getting-started)
     - [Install](#install)
     - [Use](#use)
+  - [Context](#context)
+  - [Product](#product)
+    - [Description](#description)
+    - [Screenshoots](#screenshoots)
   - [Project files](#project-files)
+  - [The team](#the-team)
 
 ## Getting started
 ### Install
@@ -19,6 +24,21 @@ Translator Flask app using Google Translate API
 - Open git bash
 - Launch run.sh : `source scripts/run.sh`
 - Open navigator and go to this URL : http://127.0.0.1:5000/
+
+## Context
+
+## Product
+### Description
+It's a web translation web application that uses Flask to create an API that connects to the public Google Translation API via the googletrans library.
+### Screenshoots
+![Initial page screenshoot](images/screenshoots/initial.png)
+*Initial page screenshoot*
+![Loading page screenshoot](images/screenshoots/loading.png)
+*Loading page screenshoot*
+![Success page screenshoot](images/screenshoots/success.png)
+*Success page screenshoot*
+![Error page screenshoot](images/screenshoots/error.png)
+*Error page screenshoot*
 
 ## Project files
 - **README.md** : Project details (this file)
@@ -78,3 +98,28 @@ Translator Flask app using Google Translate API
             - **favicon.ico** : Icon
             - **reverse_languages.png** : Image for reverse languages button
   
+## The team
+3 students in the 1st year of the Bachelor IT program specializing in Artificial Intelligence at [La Plateforme_](https://laplateforme.io/) in Marseille, France
+
+- Christian Aucane
+  <a href="https://www.linkedin.com/in/christian-aucane/">
+    <img src="images/logos/linkedin.png" width=25>
+  </a>
+  <a href="https://github.com/christian-aucane">
+    <img src="images/logos/github.png" width=25>
+  </a>
+- Bruno Coulet
+  <a href="https://www.linkedin.com/in/bruno-coulet/">
+    <img src="images/logos/linkedin.png" width=25>
+  </a>
+  <a href="https://github.com/bruno-coulet">
+    <img src="images/logos/github.png" width=25>
+  </a>
+
+- Léo Carrey
+  <a href="https://www.linkedin.com/in/leo-carrey/">
+    <img src="images/logos/linkedin.png" width=25>
+  </a>
+  <a href="https://github.com/leo-carrey/">
+    <img src="images/logos/github.png" width=25>
+  </a>
