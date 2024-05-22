@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+{% block content %}
+    <h2>Let's translate !</h2>
+    <form id="file-form" enctype="multipart/form-data" method="POST">
+        {{ form.csrf_token() }}
+            {% for field in form if field.widget.input_type != 'hidden' %}
+            <div class="field-wrapper" id="{{ field.id }}-wrapper">
+                <h5 class="label">{{ field.label }}</h5>
+                    {{ field }}
+            </div>
+        {% endfor %}
+        <img id="status-icon">
+        <div id="output-file">
+
+            {% if file %}
+                {{ file_name }}
+            {% endif %}
+        </div>
+        <input type="submit" value="Translate">
+    </form>
+{% endblock %}
+{% block js %}
+
+{% endblock %}
+</body>
+</html>

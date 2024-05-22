@@ -1,8 +1,9 @@
+from io import BytesIO
 from os import urandom as generate_secret_key
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, send_file, session
 
-from forms import TranslationForm
+from forms import TranslationForm, FileUploadForm
 from translation import detect_language, translate_text
 
 
@@ -20,6 +21,29 @@ app.config["SECRET_KEY"] = generate_secret_key(24)
 def index():
     form = TranslationForm()
     return render_template("index.html", form=form)
+
+
+@app.route("/file", methods=["GET", "POST"])
+def file():
+    # TODO : use API for file upload and download
+    form = FileUploadForm()
+    if request.method == "POST" and form.validate_on_submit():
+        file = form.file.data
+        target_language = form.target_language.data
+        file_content = file.read().decode('utf-8')
+        print(file)
+        # Translate the text
+        translated_text = translate_text(file_content, "auto", target_language)
+        # Create an in-memory file with the translated text
+        translated_file = BytesIO()
+        translated_file.write(translated_text.encode('utf-8'))
+        translated_file.seek(0)
+
+        translated_filename = 'translated_' + file.filename
+        # Send the translated file to the user
+        return send_file(translated_file, as_attachment=True, download_name=translated_filename, mimetype='text/plain')
+
+    return render_template("file_upload.html", form=form)
 
 
 @app.route("/detect-language", methods=["POST"])
