@@ -52,8 +52,13 @@ def translate():
         if source_language == target_language:
             return jsonify({"status": "error",
                             "errors": {"languages": "Source and target language must be different"}}), 400
-        
-        translated_text = translate_text(text, source_language, target_language)
+        try:
+            translated_text = translate_text(text, source_language, target_language)
+        except TypeError as e:
+            if str(e) == "'NoneType' object is not iterable":
+                e = "Error durring translation, please add more context."
+            return jsonify({"status": "error",
+                            "errors": {"translation": str(e)}}), 400
         return jsonify({"status": "success",
                         "translated_text": translated_text,
                         "source_language": source_language,

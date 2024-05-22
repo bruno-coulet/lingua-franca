@@ -17,9 +17,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-    <!-- JS -->
-    <script type="module" src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </head>
 <body>
     <div class="container">
@@ -47,12 +44,15 @@
                     {% endfor %}
                     <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
                     <button id="reverse-languages-button" type="button" disabled>
-                        <img id="reverse-languages-icon" width="30" src="{{ url_for('static', filename='images/reverse_languages.png ') }}" alt="Reverse languages">
+                        <img id="reverse-languages-icon" width="30" src="{{ url_for('static', filename='images/reverse_languages.png') }}" alt="Reverse languages">
                     </button>
                     <img id="status-icon">
                 </form>
             </div>
         </main>
     </div>
+    
+    <!-- JS -->
+    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
