@@ -17,9 +17,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-    <!-- JS -->
-    <script type="module" src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </head>
 <body>
     <div class="container">
@@ -54,5 +51,8 @@
             </div>
         </main>
     </div>
+    
+    <!-- JS -->
+    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
