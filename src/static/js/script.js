@@ -17,6 +17,7 @@ function submitTranslationForm() {
     // Reset messages
     DomElements.resultMessagesWrapper.innerHTML = '';
     DomElements.translatedText.placeholder = '🔄...';
+    DomElements.translatedText.value = '';
     ImgUtils.displayIcon(DomElements.statusIcon, '/static/images/status/loading.png');
    
     if (!DomElements.translationForm.checkValidity()) {
@@ -50,13 +51,11 @@ function submitTranslationForm() {
             })
             .catch(error => {
                 DomElements.translatedText.placeholder = "Translated text";
-
                 const errors = JSON.parse(error.message);
                 FormUtils.displayErrors(errors, DomElements.resultMessagesWrapper);
             })
         }
     }).catch(error => {
-        console.log("detection error", error)
         DomElements.translatedText.placeholder = "Translated text";
         const errors = JSON.parse(error.message);
         FormUtils.displayErrors(errors, DomElements.resultMessagesWrapper);
@@ -142,7 +141,7 @@ function addFormChangeListeners() {
         deboundDelay = setTimeout(() => {
             enableDisableReverseLanguages();
             submitTranslationForm();
-        }, 500);
+        }, 1000);
     });
     
 }
