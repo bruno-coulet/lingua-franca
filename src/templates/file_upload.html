@@ -13,14 +13,13 @@
             </div>
         {% endfor %}
         <img id="status-icon">
-        <div id="output-file">
-
-            {% if file %}
-                {{ file_name }}
-            {% endif %}
-        </div>
-        <input type="submit" value="Translate">
+        <!-- TODO : use an image in the button -->
+        <button type="submit">📥</button>
     </form>
+        {% if error %}
+            <p class="error-message" style="display: block">{{ error }}</p>
+        {% endif %}
+        <!-- TODO : add file download button -->
 {% endblock %}
 {% block js %}
 

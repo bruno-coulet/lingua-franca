@@ -1,9 +1,10 @@
-from io import BytesIO
 from os import urandom as generate_secret_key
+import os
 
 from flask import Flask, jsonify, render_template, request, send_file, session
 
 from forms import TranslationForm, FileUploadForm
+from process_files import FileFormatError, process_txt_file
 from translation import detect_language, translate_text
 
 
@@ -25,24 +26,20 @@ def index():
 
 @app.route("/file", methods=["GET", "POST"])
 def file():
-    # TODO : use API for file upload and download
+    # TODO : separate display, file upload and file download
     form = FileUploadForm()
     if request.method == "POST" and form.validate_on_submit():
         file = form.file.data
         target_language = form.target_language.data
-        file_content = file.read().decode('utf-8')
-        print(file)
-        # Translate the text
-        translated_text = translate_text(file_content, "auto", target_language)
-        # Create an in-memory file with the translated text
-        translated_file = BytesIO()
-        translated_file.write(translated_text.encode('utf-8'))
-        translated_file.seek(0)
-
-        translated_filename = 'translated_' + file.filename
-        # Send the translated file to the user
-        return send_file(translated_file, as_attachment=True, download_name=translated_filename, mimetype='text/plain')
-
+        try:
+            translated_file, source_language = process_txt_file(file, target_language)
+            translated_filename = f'translated_{source_language}_{target_language}_{file.filename}'
+            # Send the translated file to the user
+            # TODO : save in session to download later
+            return send_file(translated_file, as_attachment=True, download_name=translated_filename, mimetype='text/plain')
+        except FileFormatError as e:
+            return render_template("file_upload.html", form=form, error=str(e))
+        
     return render_template("file_upload.html", form=form)
 
 
