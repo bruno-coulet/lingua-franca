@@ -1,0 +1,24 @@
+.nav_bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    list-style-type: none;
+    gap: 30px;
+    background-color: var(--nav-bar-background-color);
+    padding: 20px 0;
+    margin: 0;
+}
+.nav_link {
+    font-size:x-large;
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 10px;
+    border:1px solid var(--border-color);
+    border-radius: 30px;
+}
+.nav_link:hover{
+    color: var(--accent-color);
+    -webkit-box-shadow: 0 4px 30px var(--shadow-color);
+    -moz-box-shadow: 0 4px 30px var(--shadow-color);
+    box-shadow: 0 4px 30px var(--shadow-color);
+}
