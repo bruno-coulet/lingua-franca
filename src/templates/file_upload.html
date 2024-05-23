@@ -6,12 +6,19 @@
     <h2>Let's translate !</h2>
     <form id="file-form" enctype="multipart/form-data" method="POST">
         {{ form.csrf_token() }}
-            {% for field in form if field.widget.input_type != 'hidden' %}
-            <div class="field-wrapper" id="{{ field.id }}-wrapper">
-                <h5 class="label">{{ field.label }}</h5>
-                    {{ field }}
+        <div class="field-wrapper" id="file-wrapper">
+            <h5 class="label">{{ form.file.label }}</h5>
+            {{ form.file }}
+        </div>
+
+        <div class="field-wrapper" id="target-language-wrapper">
+            <h5 class="label">{{ form.target_language.label }}</h5>
+            <div class="select-wrapper">
+                <img class="flag-icon" id="target-language-flag-icon" src="{{ url_for('static', filename='images/auto_language.png') }}">
+                {{ form.target_language }}
             </div>
-        {% endfor %}
+        </div>
+            
         <img id="status-icon">
         <!-- TODO : use an image in the button -->
         <button type="submit">📥</button>
