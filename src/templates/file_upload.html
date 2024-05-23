@@ -6,17 +6,17 @@
     <h2>Let's translate !</h2>
     <form id="file-form" enctype="multipart/form-data" method="POST">
         {{ form.csrf_token() }}
-        <div class="field-wrapper" id="file-wrapper">
-            <h5 class="label">{{ form.file.label }}</h5>
-            {{ form.file }}
-        </div>
-
         <div class="field-wrapper" id="target-language-wrapper">
             <h5 class="label">{{ form.target_language.label }}</h5>
             <div class="select-wrapper">
                 <img class="flag-icon" id="target-language-flag-icon" src="{{ url_for('static', filename='images/auto_language.png') }}">
                 {{ form.target_language }}
             </div>
+        </div>
+
+        <div class="field-wrapper" id="file-wrapper">
+            <h5 class="label">{{ form.file.label }}</h5>
+            {{ form.file }}
         </div>
             
         <img id="status-icon">
