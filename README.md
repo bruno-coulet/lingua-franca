@@ -32,6 +32,7 @@ The titled "Lingua Franca" is designed as an educational project guide aimed at 
 
 ### 1. Building the Application:
 Flask Framework: Introduction to Flask, setting up the web application where users can input text for translation.
+
 User Interface: Creating a user-friendly interface with fields for entering text, selecting source and target languages, and utilizing an automatic language detection feature.
 
 ### 2. Integrating Google Translation API:
