@@ -4,11 +4,11 @@ import os
 from translation import detect_language, translate_text
 
 
-class FileFormatError(Exception):
+class UnsuportedFileFormatError(Exception):
     pass
 
 
-def process_txt_file(file_content, target_language):
+def process_txt_file(file, target_language):
     """
     Process a .txt file and return the translated file and the source language
     
@@ -38,5 +38,4 @@ def process_file(file, target_language):
         return process_txt_file(file, target_language)
     # TODO : add support for other file types
     else:
-        raise FileFormatError("Unsupported file format (only .txt files are supported)")
-    
+        raise UnsuportedFileFormatError("Unsupported file format (only .txt files are supported)")
