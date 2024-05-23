@@ -27,6 +27,11 @@
 
 ## Context
 
+### Introduction:
+- The titled "Lingua Franca" is designed as an educational project guide aimed at developing a text translation tool. It outlines a practical approach for learners to understand and implement text translation using modern technologies, specifically leveraging APIs and web frameworks.
+
+
+
 ## Product
 ### Description
 It's a web translation web application that uses Flask to create an API that connects to the public Google Translation API via the googletrans library.
