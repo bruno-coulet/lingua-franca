@@ -1,10 +1,13 @@
+import os
+
 from flask_wtf import FlaskForm
-from markupsafe import Markup
-from wtforms import SelectField, TextAreaField
+from wtforms import FileField, SelectField, TextAreaField
 from wtforms.validators import DataRequired
 
 from translation import list_languages
 
+AVAILABLE_LANGUAGES = list_languages()
+ALLOWED_FILE_EXTENSIONS = ['.txt', '.docx']
 
 class TranslationForm(FlaskForm):
     source_language = SelectField("Source language",
@@ -30,6 +33,29 @@ class TranslationForm(FlaskForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        available_languages = list_languages()
-        self.source_language.choices = [("auto", "Automatic Detection")] + available_languages
-        self.target_language.choices = available_languages
+        self.source_language.choices = [("auto", "Automatic Detection")] + AVAILABLE_LANGUAGES
+        self.target_language.choices = AVAILABLE_LANGUAGES
+
+
+def verify_file_extension(form, field):
+    file_ext = os.path.splitext(field.data.filename)[1].lower()  # Get file extension
+    if file_ext not in ALLOWED_FILE_EXTENSIONS:
+        raise ValueError("Please upload a .txt file")
+
+
+class FileUploadForm(FlaskForm):
+    file = FileField("File to translate",
+                     id="file-to-translate",
+                     render_kw={"accept": ".txt",},
+                     validators=[DataRequired("Please select a file to translate"),
+                                 verify_file_extension],
+                     description="Only .txt files are supported")
+    target_language = SelectField("Target language",
+                                  id="target-language",
+                                  choices=[],
+                                  default="",
+                                  validators=[DataRequired("Please select a target language")])
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.target_language.choices = [("", "Select a target language")] + AVAILABLE_LANGUAGES

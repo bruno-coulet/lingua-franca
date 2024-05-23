@@ -1,8 +1,9 @@
 from os import urandom as generate_secret_key
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, send_file, session
 
-from forms import TranslationForm
+from forms import TranslationForm, FileUploadForm
+from process_files import UnsuportedFileFormatError, process_file
 from translation import detect_language, translate_text
 
 
@@ -20,6 +21,25 @@ app.config["SECRET_KEY"] = generate_secret_key(24)
 def index():
     form = TranslationForm()
     return render_template("index.html", form=form)
+
+
+@app.route("/file", methods=["GET", "POST"])
+def file():
+    # TODO : separate display, file upload and file download
+    form = FileUploadForm()
+    if request.method == "POST" and form.validate_on_submit():
+        file = form.file.data
+        target_language = form.target_language.data
+        try:
+            translated_file, source_language = process_file(file, target_language)
+            translated_filename = f'translated_{source_language}_{target_language}_{file.filename}'
+            # Send the translated file to the user
+            # TODO : save in session to download later
+            return send_file(translated_file, as_attachment=True, download_name=translated_filename, mimetype='text/plain')
+        except UnsuportedFileFormatError as e:
+            return render_template("file_upload.html", form=form, error=str(e))
+        
+    return render_template("file_upload.html", form=form)
 
 
 @app.route("/detect-language", methods=["POST"])

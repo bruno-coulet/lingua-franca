@@ -1,58 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Translator</title>
+{% extends 'base.html' %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+{% block content %}
+    <h2>Let's translate !</h2>
+    <form id="translation-form">
+        {{ form.csrf_token() }}
+            {% for field in form if field.widget.input_type != 'hidden' %}
+            <div class="field-wrapper" id="{{ field.id }}-wrapper">
+                <h5 class="label">{{ field.label }}</h5>
+                {% if field.name == 'source_language' or field.name == 'target_language'%}
+                    <div class="select-wrapper">
+                        <img class="flag-icon" id="{{ field.id }}-flag-icon" src="{{ url_for('static', filename='images/auto_language.png') }}">
+                        {{ field }}
+                    </div>
+                {% else %}
+                    {{ field }}
+                {% endif %}
 
-    <!-- ICON -->
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.ico') }}">
-
-    <!-- FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Welcome to our translation app</h1>
-        </header>
-        <main>
-            <div class="content">
-                <h2>Let's translate !</h2>
-                <form id="translation-form">
-                    {{ form.csrf_token() }}
-                        {% for field in form if field.widget.input_type != 'hidden' %}
-                        <div class="field-wrapper" id="{{ field.id }}-wrapper">
-                            <h5 class="label">{{ field.label }}</h5>
-                            {% if field.name == 'source_language' or field.name == 'target_language'%}
-                                <div class="select-wrapper">
-                                    <img class="flag-icon" id="{{ field.id }}-flag-icon" src="{{ url_for('static', filename='images/auto_language.png') }}">
-                                    {{ field }}
-                                </div>
-                            {% else %}
-                                {{ field }}
-                            {% endif %}
-    
-                        </div>
-                    {% endfor %}
-                    <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
-                    <button id="reverse-languages-button" type="button" disabled>
-                        <img id="reverse-languages-icon" width="30" src="{{ url_for('static', filename='images/reverse_languages.png') }}" alt="Reverse languages">
-                    </button>
-                    <img id="status-icon">
-                </form>
             </div>
-        </main>
-    </div>
-    
-    <!-- JS -->
-    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
+        {% endfor %}
+        <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
+        
+        <img id="status-icon">
+        <button id="reverse-languages-button" type="button" disabled>
+            <img id="reverse-languages-icon" width="30" src="{{ url_for('static', filename='images/reverse_languages.png') }}" alt="Reverse languages">
+        </button>
+    </form>
+{% endblock %}
+{% block js %}
+<script type="module" src="{{ url_for('static', filename='js/index/script.js') }}"></script>
+{% endblock %}
 </body>
 </html>
