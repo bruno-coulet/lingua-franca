@@ -28,18 +28,18 @@
 ## Context
 
 ### Introduction:
-- The titled "Lingua Franca" is designed as an educational project guide aimed at developing a text translation tool. It outlines a practical approach for learners to understand and implement text translation using modern technologies, specifically leveraging APIs and web frameworks.
+The titled "Lingua Franca" is designed as an educational project guide aimed at developing a text translation tool. It outlines a practical approach for learners to understand and implement text translation using modern technologies, specifically leveraging APIs and web frameworks.
 
-### Building the Application:
-- Flask Framework: Introduction to Flask, setting up the web application where users can input text for translation.
+### 1. Building the Application:
+Flask Framework: Introduction to Flask, setting up the web application where users can input text for translation.
 User Interface: Creating a user-friendly interface with fields for entering text, selecting source and target languages, and utilizing an automatic language detection feature.
 
-### Integrating Google Translation API:
-- API Connection: Detailed instructions on how to connect to the Google Translation API using a Python script.
+### 2. Integrating Google Translation API:
+API Connection: Detailed instructions on how to connect to the Google Translation API using a Python script.
 Sending Requests and Receiving Translations: How to send user-inputted text to the API and display the translated text back to the user.
 
-### Enhancing the User Interface:
-- Aesthetic Improvements: Tips on using Cascading Style Sheets (CSS) and JavaScript to make the application visually appealing and more functional.
+### 3. Enhancing the User Interface:
+Aesthetic Improvements: Tips on using Cascading Style Sheets (CSS) and JavaScript to make the application visually appealing and more functional.
 
 ## Product
 ### Description
