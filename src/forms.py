@@ -48,7 +48,8 @@ class FileUploadForm(FlaskForm):
                      id="file-to-translate",
                      render_kw={"accept": ".txt",},
                      validators=[DataRequired("Please select a file to translate"),
-                                 verify_file_extension])
+                                 verify_file_extension],
+                     description="Only .txt files are supported")
     target_language = SelectField("Target language",
                                   id="target-language",
                                   choices=[],
