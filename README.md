@@ -34,6 +34,10 @@
 - Flask Framework: Introduction to Flask, setting up the web application where users can input text for translation.
 User Interface: Creating a user-friendly interface with fields for entering text, selecting source and target languages, and utilizing an automatic language detection feature.
 
+### Integrating Google Translation API:
+- API Connection: Detailed instructions on how to connect to the Google Translation API using a Python script.
+Sending Requests and Receiving Translations: How to send user-inputted text to the API and display the translated text back to the user.
+
 
 
 ## Product
