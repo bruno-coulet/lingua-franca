@@ -1,18 +1,3 @@
-
-
-.field-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-}
-
-.select-wrapper {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
-
 /* Grid */
 #translation-form {
     width: 50%;
@@ -72,7 +57,7 @@
     grid-area: result-messages-wrapper;
 }
 
-
+/* Other */
 #text-to-translate-wrapper > .label,
 #translated-text-wrapper > .label {
     display: none;

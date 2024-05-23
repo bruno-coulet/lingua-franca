@@ -60,7 +60,6 @@ main {
 
 .error-message {
     color: var(--error-color);
-    display: none;
 }
 .success-message {
     color: var(--success-color);
@@ -123,4 +122,17 @@ button:disabled {
 
 #reverse-languages-icon {
     width: 30px;
+}
+
+.field-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+.select-wrapper {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
 }
