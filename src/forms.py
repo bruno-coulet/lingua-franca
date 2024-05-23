@@ -1,11 +1,13 @@
+import os
+
 from flask_wtf import FlaskForm
-from markupsafe import Markup
 from wtforms import FileField, SelectField, TextAreaField
 from wtforms.validators import DataRequired
 
 from translation import list_languages
 
 AVAILABLE_LANGUAGES = list_languages()
+ALLOWED_FILE_EXTENSIONS = ['txt']
 
 class TranslationForm(FlaskForm):
     source_language = SelectField("Source language",
@@ -35,11 +37,17 @@ class TranslationForm(FlaskForm):
         self.target_language.choices = AVAILABLE_LANGUAGES
 
 
+def verify_file_extension(form, field):
+    file_ext = os.path.splitext(field.data)[1].lower()  # Get file extension
+    if file_ext not in ALLOWED_FILE_EXTENSIONS:
+        raise ValueError("Please upload a .txt file")
+
 class FileUploadForm(FlaskForm):
     file = FileField("File to translate",
                      id="file-to-translate",
                      render_kw={"accept": ".txt"},
-                     validators=[DataRequired("Please select a file to translate")])
+                     validators=[DataRequired("Please select a file to translate"),
+                                 verify_file_extension])
     target_language = SelectField("Target language",
                                   id="target-language",
                                   choices=[],
