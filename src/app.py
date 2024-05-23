@@ -1,10 +1,9 @@
 from os import urandom as generate_secret_key
-import os
 
 from flask import Flask, jsonify, render_template, request, send_file, session
 
 from forms import TranslationForm, FileUploadForm
-from process_files import FileFormatError, process_txt_file
+from process_files import UnsuportedFileFormatError, process_file
 from translation import detect_language, translate_text
 
 
@@ -32,12 +31,12 @@ def file():
         file = form.file.data
         target_language = form.target_language.data
         try:
-            translated_file, source_language = process_txt_file(file, target_language)
+            translated_file, source_language = process_file(file, target_language)
             translated_filename = f'translated_{source_language}_{target_language}_{file.filename}'
             # Send the translated file to the user
             # TODO : save in session to download later
             return send_file(translated_file, as_attachment=True, download_name=translated_filename, mimetype='text/plain')
-        except FileFormatError as e:
+        except UnsuportedFileFormatError as e:
             return render_template("file_upload.html", form=form, error=str(e))
         
     return render_template("file_upload.html", form=form)
