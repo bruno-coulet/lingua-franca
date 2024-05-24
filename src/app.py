@@ -23,26 +23,41 @@ def index():
     return render_template("index.html", form=form)
 
 
-@app.route("/file", methods=["GET", "POST"])
+@app.route("/file", methods=["GET"])
 def file():
-    # TODO : separate display, file upload and file download
     form = FileUploadForm()
-    if request.method == "POST" and form.validate_on_submit():
-        file = form.file.data
-        target_language = form.target_language.data
-        try:
-            translated_file, source_language = process_file(file, target_language)
-            translated_filename = f'translated_{source_language}_{target_language}_{file.filename}'
-            # Send the translated file to the user
-            # TODO : save in session to download later
-            return send_file(translated_file, as_attachment=True, download_name=translated_filename, mimetype='text/plain')
-        except UnsuportedFileFormatError as e:
-            return render_template("file_upload.html", form=form, error=str(e))
-        
     return render_template("file_upload.html", form=form)
 
 
-@app.route("/detect-language", methods=["POST"])
+@app.route("/api/upload-file", methods=["POST"])
+def upload_file():
+    form = FileUploadForm(request.form)
+    if form.validate_on_submit():
+        file = form.file.data
+        target_language = form.target_language.data
+
+        try:
+            translated_file, source_language = process_file(file, target_language)
+            translated_filename = f'translated_{source_language}_{target_language}_{file.filename}'
+            session["translated_file"] = translated_file
+            session["translated_filename"] = translated_filename
+            return jsonify({"status": "success", "mesage": "File uploaded"}), 200
+        except UnsuportedFileFormatError as e:
+            return jsonify({"status": "error", "errors": {"file": str(e)}}), 400
+        
+    else:
+        errors = {field.replace("_", "-"): error for field, error in form.errors.items()}
+        return jsonify({"status": "error", "errors": errors}), 400
+
+
+@app.route("/api/download-file", methods=["GET"])
+def download_file():
+    if "translated_file" in session:
+        return send_file(session["translated_file"], as_attachment=True, download_name=session["translated_filename"], mimetype='text/plain')
+    return jsonify({"status": "error", "errors": {"file": "No file to download"}}), 400
+
+
+@app.route("/api/detect-language", methods=["POST"])
 def detect():
     form = TranslationForm(request.form)
     if form.validate_on_submit():
@@ -61,7 +76,7 @@ def detect():
         return jsonify({"status": "error", "errors": errors}), 400
 
 
-@app.route("/translate", methods=["POST"])
+@app.route("/api/translate", methods=["POST"])
 def translate():
     form = TranslationForm(request.form)
     if form.validate_on_submit():
