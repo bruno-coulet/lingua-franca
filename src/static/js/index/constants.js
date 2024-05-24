@@ -31,6 +31,6 @@ export const DomElements = {
  * @property {string} detectLanguage - The route for the detect language API
  */
 export const ApiRoutes = {
-    translate: '/translate',
-    detectLanguage: '/detect-language',
+    translate: '/api/translate',
+    detectLanguage: '/api/detect-language',
 }
