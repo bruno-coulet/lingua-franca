@@ -24,7 +24,7 @@ h1, h2, h3, h4, h5, h6 {
 header {
     background-color: var(--header-background-color);
     color: var(--header-color);
-    padding: 10px;
+    padding: 1px;
     text-align: center;
     position: sticky;
     top: 0;
