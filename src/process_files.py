@@ -1,6 +1,10 @@
 from io import BytesIO
 import os
 
+from docx import Document
+from docx.enum.text import WD_BREAK
+
+from docx_processing import DocxTranslator
 from translation import detect_language, translate_text
 
 
@@ -27,7 +31,16 @@ def process_txt_file(file, target_language):
     translated_file.seek(0)
     return translated_file, source_language
 
-
+def process_docx_file(file, target_language):
+    """
+    Process a .docx file and return the translated file and the source language
+    """
+    docx_translator = DocxTranslator(file, target_language)
+    translated_doc = docx_translator.process_document()
+    translated_file = BytesIO()
+    translated_doc.save(translated_file)
+    translated_file.seek(0)
+    return translated_file, docx_translator.detected_language
 
 def process_file(file, target_language):
     """
@@ -36,6 +49,8 @@ def process_file(file, target_language):
     file_ext = os.path.splitext(file.filename)[1].lower()  # Get file extension
     if file_ext == ".txt":
         return process_txt_file(file, target_language)
+    elif file_ext == ".docx":
+        return process_docx_file(file, target_language)
     # TODO : add support for other file types
     else:
         raise UnsuportedFileFormatError("Unsupported file format (only .txt files are supported)")

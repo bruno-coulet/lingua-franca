@@ -40,13 +40,13 @@ class TranslationForm(FlaskForm):
 def verify_file_extension(form, field):
     file_ext = os.path.splitext(field.data.filename)[1].lower()  # Get file extension
     if file_ext not in ALLOWED_FILE_EXTENSIONS:
-        raise ValueError("Please upload a .txt file")
+        raise ValueError("Please upload a .txt or .docx file")
 
 
 class FileUploadForm(FlaskForm):
     file = FileField("File to translate",
                      id="file-to-translate",
-                     render_kw={"accept": ".txt",},
+                     render_kw={"accept": ".txt,.docx",},
                      validators=[DataRequired("Please select a file to translate"),
                                  verify_file_extension],
                      description="Only .txt files are supported")
