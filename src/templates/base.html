@@ -17,13 +17,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav_bar.css') }}">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Welcome to our translation app</h1>
-        </header>
+        <div id="header_nav">
+            <header>
+                <h1>Welcome to our translation app</h1>
+            </header>
+            <nav>
+                <ul class="nav_bar">
+                    <li><a href="/"><img class="nav_link nav_logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="logo"></a></li>
+                    <li><a class="nav_link" href="/">Text translation</a></li>
+                    <li><a class="nav_link" href="/file">File translation</a></li>
+                </ul>
+            </nav>
+        </div>
         <main>
             <div class="content">
                 {% block content %}

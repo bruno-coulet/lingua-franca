@@ -7,6 +7,8 @@
     --input-hover-background-color: rgba(228, 201, 169, 1);
     --button-background-color: rgba(228, 201, 169, 0.8);
     --button-hover-background-color: rgb(228, 201, 169, 1);
+    --nav-bar-background-color: rgba(228, 201, 169, 1);
+    --light-color: rgba(242, 236, 230, 1);
     
     /* Text colors */
     --text-color: #564D48;
