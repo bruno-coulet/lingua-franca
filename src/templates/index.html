@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 {% endblock %}
 {% block content %}
-    <h2>Text Translation</h2>
+    <h2>Let's translate !</h2>
     <form id="translation-form">
         {{ form.csrf_token() }}
             {% for field in form if field.widget.input_type != 'hidden' %}
