@@ -1,5 +1,5 @@
 // Contains AJAX functions namespace
-import { ApiRoutes } from './constants.js';
+import { ApiRoutes } from './index/constants.js';
 
 /**
  * Ajax functions

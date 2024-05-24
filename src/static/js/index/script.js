@@ -1,7 +1,7 @@
 import { DomElements } from './constants.js';
-import { AjaxFunctions } from './ajaxFunctions.js';
+import { AjaxFunctions } from '../ajaxFunctions.js';
 import { FormUtils, ImgUtils } from './utils.js';
-import { languageToCountryMap } from './mapCountries.js';
+import { changeFlag } from '../flags.js';
 
 /**
  * Handle form submission
@@ -148,19 +148,6 @@ function addFormChangeListeners() {
     
 }
 
-/**
- * Change the flag icon
- * @param {HTMLSelectElement} select - The select element
- */
-function changeFlag(select) {
-    const img = document.getElementById(`${select.id}-flag-icon`)
-    if (select.value === "auto") {
-        img.src = `/static/images/auto_language.png`
-    }
-    else {
-        img.src = `https://flagsapi.com/${languageToCountryMap[select.value]}/shiny/32.png`
-    }
-}
 
 /**
  * Initialize
