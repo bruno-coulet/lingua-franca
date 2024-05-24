@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/file_upload.css') }}">
 {% endblock %}
 {% block content %}
     <h2>Let's translate !</h2>
-    <form id="file-form" enctype="multipart/form-data" method="POST">
+    <form id="file-upload-form" enctype="multipart/form-data" method="POST">
         {{ form.csrf_token() }}
         <div class="field-wrapper" id="target-language-wrapper">
             <h5 class="label">{{ form.target_language.label }}</h5>
