@@ -30,6 +30,11 @@ header {
     top: 0;
 }
 
+header h1{
+    margin-bottom: 0;
+    margin-top: 20px;
+}
+
 main {
     padding: 20px;
     background-image: url("/static/images/background.png");
@@ -44,6 +49,10 @@ main {
 }
 
 .content {
+    
+    width: 50%;
+    height: 60%;    
+    margin: auto auto;
     padding: 40px 80px; 
     margin: auto;
 
@@ -62,7 +71,7 @@ main {
 .error-message {
     color: var(--error-color);
 }
-.success-message {
+#success-message {
     color: var(--success-color);
 }
 

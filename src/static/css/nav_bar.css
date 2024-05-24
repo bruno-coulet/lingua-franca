@@ -18,13 +18,9 @@
 .nav-link:hover{
     color: var(--accent-color);
 }
-header h1{
-    margin-bottom: 0;
-    margin-top: 20px;
-}
+
 .nav-logo{
     height: 50px;
     width: 50px;
     padding: 0 10px;
-
 }

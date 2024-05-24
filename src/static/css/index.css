@@ -1,10 +1,7 @@
 /* Grid */
 #translation-form {
-    width: 50%;
-    height: 60%;    
-    margin: auto auto;
-    gap: 10px;
     display: grid;
+    gap: 10px;
     grid-template-columns: 5fr 0.3fr 5fr;
     grid-template-rows: repeat(5, 1fr);
     grid-template-areas:
