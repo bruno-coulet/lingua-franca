@@ -18,6 +18,7 @@
 .nav-link:hover{
     color: var(--accent-color);
 }
+
 .nav-logo{
     height: 50px;
     width: 50px;
