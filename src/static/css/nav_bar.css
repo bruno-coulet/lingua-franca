@@ -1,4 +1,4 @@
-.nav_bar {
+.nav-bar {
     display: flex;
     flex-direction: row;
     justify-content: left;
@@ -9,22 +9,17 @@
     margin: 0;
     background: linear-gradient(0.50turn,var(--header-background-color), var(--light-color), var(--header-background-color));
 }
-.nav_link {
+.nav-link {
     font-size:x-large;
     text-decoration: none;
     color: var(--text-color);
     padding: 5px;
 }
-.nav_link:hover{
+.nav-link:hover{
     color: var(--accent-color);
 }
-header h1{
-    margin-bottom: 0;
-    margin-top: 20px;
-}
-.nav_logo{
+.nav-logo{
     height: 50px;
     width: 50px;
     padding: 0 10px;
-
 }
