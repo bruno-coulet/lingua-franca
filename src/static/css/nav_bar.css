@@ -4,9 +4,9 @@
     justify-content: center;
     list-style-type: none;
     gap: 30px;
-    background-color: var(--nav-bar-background-color);
-    padding: 20px 0;
+    padding: 30px 0;
     margin: 0;
+    background: linear-gradient(0.50turn,var(--header-background-color), var(--light-color), var(--header-background-color));
 }
 .nav_link {
     font-size:x-large;
@@ -20,5 +20,5 @@
     color: var(--accent-color);
     -webkit-box-shadow: 0 4px 30px var(--shadow-color);
     -moz-box-shadow: 0 4px 30px var(--shadow-color);
-    box-shadow: 0 4px 30px var(--shadow-color);
+    box-shadow: 0 4px 20px var(--shadow-color);
 }
