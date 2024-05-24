@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/file_upload.css') }}">
 {% endblock %}
 {% block content %}
-    <h2>Let's translate !</h2>
-    <form id="file-form" enctype="multipart/form-data" method="POST">
+    <h2>File Translation</h2>
+    <form id="upload-form" enctype="multipart/form-data" method="POST">
         {{ form.csrf_token() }}
         <div class="field-wrapper" id="target-language-wrapper">
             <h5 class="label">{{ form.target_language.label }}</h5>
@@ -13,19 +13,19 @@
                 {{ form.target_language }}
             </div>
         </div>
-
+        
         <div class="field-wrapper" id="file-wrapper">
             <h5 class="label">{{ form.file.label }}</h5>
             {{ form.file }}
         </div>
             
-        <img id="status-icon">
         <!-- TODO : use an image in the button -->
         <button type="submit">📥</button>
+        <img id="status-icon" class="status-icon">
     </form>
-        {% if error %}
-            <p class="error-message" style="display: block">{{ error }}</p>
-        {% endif %}
+    
+    <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
+
         <!-- TODO : add file download button -->
 {% endblock %}
 {% block js %}
