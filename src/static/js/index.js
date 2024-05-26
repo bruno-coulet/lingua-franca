@@ -1,7 +1,7 @@
-import { DomElements } from './constants.js';
-import { AjaxFunctions } from '../ajaxFunctions.js';
-import { FormUtils, ImgUtils } from './utils.js';
-import { changeFlag } from '../flags.js';
+import { DomElements } from './common/constants.js';
+import { AjaxFunctions } from './common/ajaxFunctions.js';
+import { FormUtils, ImgUtils } from './common/utils.js';
+import { changeFlag } from './common/flags.js';
 
 /**
  * Handle form submission

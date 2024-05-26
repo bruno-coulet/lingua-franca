@@ -21,6 +21,10 @@ export const DomElements = {
     statusIcon: document.getElementById('status-icon'),
     sourceLanguageSelect: document.getElementById('source-language'),
     targetLanguageSelect: document.getElementById('target-language'),
+
+    fileUploadForm: document.getElementById('file-upload-form'),
+    downloadWrapper: document.getElementById('download-wrapper'),
+    filename: document.getElementById('filename'),
 }
 
 
@@ -33,4 +37,6 @@ export const DomElements = {
 export const ApiRoutes = {
     translate: '/api/translate',
     detectLanguage: '/api/detect-language',
+
+    uploadFile: '/api/file-upload',
 }
