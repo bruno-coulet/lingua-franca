@@ -1,4 +1,6 @@
 from os import urandom as generate_secret_key
+import os
+from pathlib import Path
 
 from flask import Flask, jsonify, render_template, request, send_file, session
 
@@ -14,7 +16,8 @@ DEBUG = True
 # Flask app
 app = Flask(__name__)
 app.config["SECRET_KEY"] = generate_secret_key(24)
-
+TRANSLATED_FILES_FOLDER = Path(app.root_path) / "translated_files"
+TRANSLATED_FILES_FOLDER.mkdir(parents=True, exist_ok=True)
 
 # Routes
 @app.route("/", methods=["GET"])
@@ -29,32 +32,60 @@ def file():
     return render_template("file_upload.html", form=form)
 
 
-@app.route("/api/upload-file", methods=["POST"])
-def upload_file():
-    form = FileUploadForm(request.form)
-    if form.validate_on_submit():
-        file = form.file.data
-        target_language = form.target_language.data
-
+@app.route("/api/file-upload", methods=["POST"])
+def file_upload():
+    errors = {}
+    if "file" not in request.files:
+        errors["file"] = "No file uploaded"
+    if "target_language" not in request.form:
+        errors["target-language"] = "No target language specified"
+    
+    file = request.files["file"]
+    target_language = request.form["target_language"]
+    # TODO : vérifier le csrf_token
+    if not errors:
         try:
             translated_file, source_language = process_file(file, target_language)
             translated_filename = f'translated_{source_language}_{target_language}_{file.filename}'
-            session["translated_file"] = translated_file
+                    
+            translated_file_path = os.path.join(TRANSLATED_FILES_FOLDER, translated_filename)
+
+            with open(translated_file_path, "wb") as f:
+                f.write(translated_file.getvalue())
+
+            session["translated_file_path"] = translated_file_path
             session["translated_filename"] = translated_filename
-            return jsonify({"status": "success", "mesage": "File uploaded"}), 200
+
+            message = "File uploaded and translated successfully."
+            file_ext = os.path.splitext(translated_filename)[-1].lower()  # Get file extension
+            if file_ext == ".docx":
+                message += " Tables are not at the same place, they will be at the end of the file."
+
+            return jsonify({"status": "success", "message": message, "filename": translated_filename}), 200
         except UnsuportedFileFormatError as e:
             return jsonify({"status": "error", "errors": {"file": str(e)}}), 400
         
     else:
-        errors = {field.replace("_", "-"): error for field, error in form.errors.items()}
         return jsonify({"status": "error", "errors": errors}), 400
 
 
 @app.route("/api/download-file", methods=["GET"])
 def download_file():
-    if "translated_file" in session:
-        return send_file(session["translated_file"], as_attachment=True, download_name=session["translated_filename"], mimetype='text/plain')
-    return jsonify({"status": "error", "errors": {"file": "No file to download"}}), 400
+    translated_file_path = session.get("translated_file_path")
+    translated_filename = session.get("translated_filename")
+    if not translated_file_path:
+        return jsonify({"status": "error", "errors": {"file": "No file to download"}}), 400
+    
+    # Detect mimetype
+    file_ext = os.path.splitext(translated_filename)[-1].lower()  # Get file extension
+    mimetype = 'application/octet-stream'
+    if file_ext == ".txt":
+        mimetype = "text/plain"
+    elif file_ext == ".docx":
+        mimetype = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+
+
+    return send_file(translated_file_path, as_attachment=True, download_name=translated_filename, mimetype=mimetype)
 
 
 @app.route("/api/detect-language", methods=["POST"])
