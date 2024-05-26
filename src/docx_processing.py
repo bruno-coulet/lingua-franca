@@ -24,11 +24,7 @@ class DocxTranslator:
             return True
         except TypeError as e:
             if str(e) == "sequence item 0: expected str instance, NoneType found":
-                print("DETECT LANGUAGE ERROR : ", e)
                 return False
-        # TODO
-        # if self.detected_language is not None:
-        #     raise MultipleLanguagesError("Multiple languages detected in the document")
 
     @staticmethod
     def add_image(paragraph, image_blob):

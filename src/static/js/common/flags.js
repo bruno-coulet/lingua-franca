@@ -111,4 +111,17 @@ const languageToCountryMap = {
     'zu': 'ZA', // South Africa (Zulu)
 };
 
-export { languageToCountryMap };
+
+/**
+ * Change the flag icon
+ * @param {HTMLSelectElement} select - The select element
+ */
+export function changeFlag(select) {
+    const img = document.getElementById(`${select.id}-flag-icon`)
+    if (select.value === "auto") {
+        img.src = `/static/images/auto_language.png`
+    }
+    else {
+        img.src = `https://flagsapi.com/${languageToCountryMap[select.value]}/shiny/32.png`
+    }
+}

@@ -49,5 +49,19 @@ export const AjaxFunctions = {
         } else {
             throw new Error(JSON.stringify(data.errors));
         };
+    },
+
+    uploadFile: async function (formData) {
+        const response = await fetch(ApiRoutes.uploadFile, {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+        if (data.status === 'success') {
+            return data;
+        } else {
+            console.log(data)
+            throw new Error(JSON.stringify(data.errors));
+        };
     }
 };
