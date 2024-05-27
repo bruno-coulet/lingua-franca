@@ -1,14 +1,14 @@
 from io import BytesIO
 import os
 
-from docx import Document
-from docx.enum.text import WD_BREAK
-
 from docx_processing import DocxTranslator
 from translation import detect_language, translate_text
 
 
 class UnsuportedFileFormatError(Exception):
+    """
+    Exception raised when the file format is not supported
+    """
     pass
 
 
@@ -19,6 +19,9 @@ def process_txt_file(file, target_language):
     Args:
         file (werkzeug.datastructures.FileStorage): The file to process
         target_language (str): The language code of the target language
+
+    Returns:
+        tuple: A tuple containing the translated file and the source language
     """
     # Read the file content
     file_content = file.read().decode('utf-8')
@@ -34,6 +37,13 @@ def process_txt_file(file, target_language):
 def process_docx_file(file, target_language):
     """
     Process a .docx file and return the translated file and the source language
+
+    Args:
+        file (werkzeug.datastructures.FileStorage): The file to process
+        target_language (str): The language code of the target language
+
+    Returns:
+        tuple: A tuple containing the translated file and the source language
     """
     docx_translator = DocxTranslator(file, target_language)
     translated_doc = docx_translator.process_document()
@@ -45,6 +55,16 @@ def process_docx_file(file, target_language):
 def process_file(file, target_language):
     """
     Process a file and return the translated file and the source language
+
+    Args:
+        file (werkzeug.datastructures.FileStorage): The file to process
+        target_language (str): The language code of the target language
+
+    Returns:
+        tuple: A tuple containing the translated file and the source language
+
+    Raises:
+        UnsuportedFileFormatError: If the file format is not supported
     """
     file_ext = os.path.splitext(file.filename)[1].lower()  # Get file extension
     if file_ext == ".txt":
