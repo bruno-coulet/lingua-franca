@@ -3,9 +3,10 @@ import { DomElements } from './common/constants.js';
 import { AjaxFunctions } from './common/ajaxFunctions.js';
 import { ImgUtils, FormUtils } from './common/utils.js';
 
-
+/**
+ * Handle form submission
+ */
 function submitFileUploadForm() {
-
     // Reset messages
     DomElements.downloadWrapper.style.display = "none";
     DomElements.filename.textContent = "";
@@ -46,7 +47,9 @@ function submitFileUploadForm() {
     })
 }
 
-    
+/**
+ * Initialize
+ */
 function init() {
     // Events listeners
     DomElements.fileUploadForm.addEventListener('submit', (event) => {

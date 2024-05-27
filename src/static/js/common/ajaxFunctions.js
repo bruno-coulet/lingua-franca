@@ -51,6 +51,12 @@ export const AjaxFunctions = {
         };
     },
 
+    /**
+     * Send a request to the upload file API
+     * @param {FormData} formData - The formData object
+     * @returns {Promise<Object>} - A JSON object with the status
+     * @throws {Error} - If the upload failed
+     */
     uploadFile: async function (formData) {
         const response = await fetch(ApiRoutes.uploadFile, {
             method: 'POST',
