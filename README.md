@@ -8,6 +8,10 @@
     - [Install](#install)
     - [Use](#use)
   - [Context](#context)
+    - [Introduction:](#introduction)
+    - [1. Building the Application:](#1-building-the-application)
+    - [2. Integrating Google Translation API:](#2-integrating-google-translation-api)
+    - [3. Enhancing the User Interface:](#3-enhancing-the-user-interface)
   - [Product](#product)
     - [Description](#description)
     - [Screenshoots](#screenshoots)
@@ -45,17 +49,16 @@ Aesthetic Improvements: Tips on using Cascading Style Sheets (CSS) and JavaScrip
 ## Product
 ### Description
 It's a web translation web application that uses Flask to create an API that connects to the public Google Translation API via the googletrans library.
+
 ### Screenshoots
-![Initial page screenshoot](images/screenshoots/initial.png)
-*Initial page screenshoot*
-![Loading page screenshoot](images/screenshoots/loading.png)
-*Loading page screenshoot*
-![Success page screenshoot](images/screenshoots/success.png)
-*Success page screenshoot*
-![Error page screenshoot](images/screenshoots/error.png)
-*Error page screenshoot*
+![Index page screenshoot](images/screenshoots/index.png)
+*Index page screenshoot*
+![File upload page screenshoot](images/screenshoots/file_upload.png)
+*File upload page screenshoot*
 
 ## Project files
+- **images/** : README illustrations
+- **samples/** : Samples files to test application
 - **README.md** : Project details (this file)
 - **.gitignore** : Files ignored by Git
 - **requirements.txt** : Project dependencies
@@ -68,41 +71,61 @@ It's a web translation web application that uses Flask to create an API that con
         - Run src/app.py
 - **src/** : Source files
     - **templates/** : Contain HTML templates
-        - **index.html** : The interface
-    - **forms.py** : Contain TranlsationForm class
+        - **base.html** : Base template
+        - **index.html** : The index template
+        - **file_upload.html** : The file upload page template
+    - **forms.py** : Contain forms classes
+        - `TranslationForm` : The form to translate text
+        - `FileUploadForm` : The form to uplpoad files
     - **translation.py** : Contain functions to connect to the translation API
+        - `list_languages()` : Return the list of allowed languages
+        - `detect_language(text)` : Call the API and return the detexted language
+        - `translate_text(text, from_language, to_language)` : Cal the API and return the translated text
     - **app.py** : Contain the Flask app, and routes
-        - `index()` : Display the interface
+        - `index()` : Display the translate text interface
+        - `file()` : Display the translate file interface
+        - `file_upload()` : Translate the uploaded file and save in translated_files/ dir
+        - `download_file()` : Download treanslated file in the client
         - `detect()` : Detect the language
         - `translate()` : Translate the text
     - **static/** : Static files dirs
         - **js/** : JavaScript modules
-            - **constants.js** : Constants namespaces
-                - `DomElements` : Namespace for usefull HTML Dom elements
-                - `ApiRoutes` : Namespace for API routes
-            - **utils.js** : Utility functions namespaces
-                - `FormUtils` : Namespace for utility forms functions
-                    - `updateFormFields(form, formData)` : Update the form with the FormData object
-                    - `displayErrors(errors, defaultParentElement, errorMessageClass="error-message")` : Display the errors in the fields
-                - `ImgUtils` : Namespace for utility images functions
-                    - `displayIcon(element, src)` : Change src and display img
-            - **ajaxFunctions.js** : AJAX functions namespace
-                - `AjaxFunctions` : Namespace for AJAX calls
-                    - `detectLanguage(formData)` : Send a POST request to detect-language/ API route
-                    - `translate(formData)` : Send a POST request to translate/ API route
-            - **script.js** : Main JS script
+            - **common/** : Common JS modules
+                - **constants.js** : Constants namespaces
+                    - `DomElements` : Namespace for usefull HTML Dom elements
+                    - `ApiRoutes` : Namespace for API routes
+                - **utils.js** : Utility functions namespaces
+                    - `FormUtils` : Namespace for utility forms functions
+                        - `updateFormFields(form, formData)` : Update the form with the FormData object
+                        - `displayErrors(errors, defaultParentElement, errorMessageClass="error-message")` : Display the errors in the fields
+                    - `ImgUtils` : Namespace for utility images functions
+                        - `displayIcon(element, src)` : Change src and display img
+                  - **ajaxFunctions.js** : AJAX functions namespace
+                      - `AjaxFunctions` : Namespace for AJAX calls
+                          - `detectLanguage(formData)` : Send a POST request to detect-language/ API route
+                          - `translate(formData)` : Send a POST request to translate/ API route
+                          - `uploadFile(formData)` : Send a POST request to upload and translate a file
+                  - **flags.js** : Contain the flag displaying function
+                      - `languageToCountryMap` : Object to map countries with languages
+                      - `changeFlag(select)` : Change Flag icon
+
+
+            - **index.js** : Index page JS script
                 - `submitTranslationForm()` : Submit the form to the backend and modify display with the response
                 - `reverseLanguages()` : Reverse source and target languages and submit form
                 - `EnableDisableReverseLanguages()` : Enable/disable reverse languages button
                 - `addFormChangeListeners()` : Add listeners on form fields to submit form when a field is modified
-                - `changeFlag(select)` : Change Flag icon
                 - `init()` : Initialize event listeners and put navigator language in target language
-            - **mapCountries.js** : Map languages and countries
-                - `languageToCountryMap` : Object to map countries with languages
+            - **fileUpload.js** : File Upload page JS script
+                - `submitFileUploadForm()` : Submit the form and modify display with the response
+                - `init()` : Initialize event listeners and put navigator language in target language
         - **css/** : CSS files
             - **normalize.css** : To normalize styles
             - **variables.css** : Variables (Colors ...)
             - **style.css** : Project style
+            - **index.css** : Index page style
+            - **file_upload.css** : File Upload page style
+            - **nav_bar.css** : Navbar style
         - **images/** : Images files
             - **status/** : Status images
                 - **success.png** : Success image
@@ -112,6 +135,7 @@ It's a web translation web application that uses Flask to create an API that con
             - **background.png** : Background image
             - **favicon.ico** : Icon
             - **reverse_languages.png** : Image for reverse languages button
+            - **logo.png** : Logo in the navbar
   
 ## The team
 3 students in the 1st year of the Bachelor IT program specializing in Artificial Intelligence at [La Plateforme_](https://laplateforme.io/) in Marseille, France
