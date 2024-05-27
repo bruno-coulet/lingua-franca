@@ -19,21 +19,85 @@ app.config["SECRET_KEY"] = generate_secret_key(24)
 TRANSLATED_FILES_FOLDER = Path(app.root_path) / "translated_files"
 TRANSLATED_FILES_FOLDER.mkdir(parents=True, exist_ok=True)
 
-# Routes
+
+# Text translation
 @app.route("/", methods=["GET"])
 def index():
+    """
+    Index page
+    """
     form = TranslationForm()
     return render_template("index.html", form=form)
 
 
+@app.route("/api/detect-language", methods=["POST"])
+def detect():
+    """
+    Detect the language of the text
+    """
+    form = TranslationForm(request.form)
+    if form.validate_on_submit():
+        text = form.text_to_translate.data
+        target_language = detect_language(text)
+        source_language = form.source_language.data
+        
+        if source_language == target_language:
+            return jsonify({"status": "error",
+                            "errors": {"languages": "Source and target language must be different"}}), 400
+
+        return jsonify({"status": "success",
+                        "language": target_language}), 200
+    else:
+        errors = {field.replace("_", "-"): error for field, error in form.errors.items()}
+        return jsonify({"status": "error", "errors": errors}), 400
+
+
+@app.route("/api/translate", methods=["POST"])
+def translate():
+    """
+    Translate the text
+    """
+    form = TranslationForm(request.form)
+    if form.validate_on_submit():
+        text = form.text_to_translate.data
+        source_language = form.source_language.data
+        target_language = form.target_language.data
+        
+        if source_language == target_language:
+            return jsonify({"status": "error",
+                            "errors": {"languages": "Source and target language must be different"}}), 400
+        try:
+            translated_text = translate_text(text, source_language, target_language)
+        except TypeError as e:
+            if str(e) == "'NoneType' object is not iterable":
+                e = "Error durring translation, please add more context."
+            return jsonify({"status": "error",
+                            "errors": {"translation": str(e)}}), 400
+        return jsonify({"status": "success",
+                        "translated_text": translated_text,
+                        "source_language": source_language,
+                        "target_language": target_language}), 200
+    else:
+        return jsonify({"status": "error",
+                        "errors": form.errors}), 400
+
+
+# File translation
+
 @app.route("/file", methods=["GET"])
 def file():
+    """
+    File upload page
+    """
     form = FileUploadForm()
     return render_template("file_upload.html", form=form)
 
 
 @app.route("/api/file-upload", methods=["POST"])
 def file_upload():
+    """
+    Upload a file, translate it and save in translated_files/ dir
+    """
     errors = {}
     if "file" not in request.files:
         errors["file"] = "No file uploaded"
@@ -69,8 +133,11 @@ def file_upload():
         return jsonify({"status": "error", "errors": errors}), 400
 
 
-@app.route("/api/download-file", methods=["GET"])
+@app.route("/download-file", methods=["GET"])
 def download_file():
+    """
+    Download the translated file
+    """
     translated_file_path = session.get("translated_file_path")
     translated_filename = session.get("translated_filename")
     if not translated_file_path:
@@ -86,52 +153,6 @@ def download_file():
 
 
     return send_file(translated_file_path, as_attachment=True, download_name=translated_filename, mimetype=mimetype)
-
-
-@app.route("/api/detect-language", methods=["POST"])
-def detect():
-    form = TranslationForm(request.form)
-    if form.validate_on_submit():
-        text = form.text_to_translate.data
-        target_language = detect_language(text)
-        source_language = form.source_language.data
-        
-        if source_language == target_language:
-            return jsonify({"status": "error",
-                            "errors": {"languages": "Source and target language must be different"}}), 400
-
-        return jsonify({"status": "success",
-                        "language": target_language}), 200
-    else:
-        errors = {field.replace("_", "-"): error for field, error in form.errors.items()}
-        return jsonify({"status": "error", "errors": errors}), 400
-
-
-@app.route("/api/translate", methods=["POST"])
-def translate():
-    form = TranslationForm(request.form)
-    if form.validate_on_submit():
-        text = form.text_to_translate.data
-        source_language = form.source_language.data
-        target_language = form.target_language.data
-        
-        if source_language == target_language:
-            return jsonify({"status": "error",
-                            "errors": {"languages": "Source and target language must be different"}}), 400
-        try:
-            translated_text = translate_text(text, source_language, target_language)
-        except TypeError as e:
-            if str(e) == "'NoneType' object is not iterable":
-                e = "Error durring translation, please add more context."
-            return jsonify({"status": "error",
-                            "errors": {"translation": str(e)}}), 400
-        return jsonify({"status": "success",
-                        "translated_text": translated_text,
-                        "source_language": source_language,
-                        "target_language": target_language}), 200
-    else:
-        return jsonify({"status": "error",
-                        "errors": form.errors}), 400
 
 
 # Run
