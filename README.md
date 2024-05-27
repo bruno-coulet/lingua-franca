@@ -14,7 +14,10 @@
     - [3. Enhancing the User Interface:](#3-enhancing-the-user-interface)
   - [Product](#product)
     - [Description](#description)
-    - [Screenshoots](#screenshoots)
+    - [Features](#features)
+      - [Text translation](#text-translation)
+      - [File translation](#file-translation)
+        - [Allowed files types](#allowed-files-types)
   - [Project files](#project-files)
   - [The team](#the-team)
 
@@ -50,9 +53,18 @@ Aesthetic Improvements: Tips on using Cascading Style Sheets (CSS) and JavaScrip
 ### Description
 It's a web translation web application that uses Flask to create an API that connects to the public Google Translation API via the googletrans library.
 
-### Screenshoots
-![Index page screenshoot](images/screenshoots/index.png)
-*Index page screenshoot*
+### Features
+#### Text translation
+Translate the text user write in the form.
+![Translate text page screenshoot](images/screenshoots/index.png)
+*Translate text page screenshoot*
+
+#### File translation
+Translate the file the user upload in the form
+##### Allowed files types
+- **Text file** : .txt
+- **Microsoft Word file** : .docx
+
 ![File upload page screenshoot](images/screenshoots/file_upload.png)
 *File upload page screenshoot*
 
@@ -114,8 +126,6 @@ It's a web translation web application that uses Flask to create an API that con
                   - **flags.js** : Contain the flag displaying function
                       - `languageToCountryMap` : Object to map countries with languages
                       - `changeFlag(select)` : Change Flag icon
-
-
             - **index.js** : Index page JS script
                 - `submitTranslationForm()` : Submit the form to the backend and modify display with the response
                 - `reverseLanguages()` : Reverse source and target languages and submit form
