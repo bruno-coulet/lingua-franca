@@ -88,6 +88,12 @@ It's a web translation web application that uses Flask to create an API that con
         - `download_file()` : Download treanslated file in the client
         - `detect()` : Detect the language
         - `translate()` : Translate the text
+    - **docx_processing.py** : To process docx files
+        - `DocxTranslator` : To translate docx files
+    - **process_files.py** : To process files
+        - `process_txt_file(file, target_language)` : Process a txt file and return translated_file and detected_language
+        - `process_docx_file(file, target_language)` : Process a docx file and return translated_file and detected_language
+        - `process_file(file, target_language)` : Call the good processing function in relation to file extension
     - **static/** : Static files dirs
         - **js/** : JavaScript modules
             - **common/** : Common JS modules
