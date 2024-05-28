@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/file_upload.css') }}">
 {% endblock %}
 {% block content %}
-    <h2>Let's translate !</h2>
+    <h2>File Translation</h2>
     <form id="file-upload-form" enctype="multipart/form-data" method="POST">
         {{ form.csrf_token() }}
         <div class="field-wrapper" id="target-language-wrapper">
@@ -18,17 +18,21 @@
             <h5 class="label">{{ form.file.label }}</h5>
             {{ form.file }}
         </div>
+
+        <div class="field-wrapper" id="rgpd-consent-wrapper">
+            <h5 class ="label">{{ form.gdpr_consent.label }}</h5>
+            {{ form.gdpr_consent }}
+        </div>
             
-        <img id="status-icon">
-        <!-- TODO : use an image in the button -->
-        <button type="submit">📥</button>
+        <button type="submit"><img width="30" src="{{ url_for('static', filename='images/upload.png') }}" alt="Upload icon"></button>
     </form>
+    <img id="status-icon">
+
     <div id="result-messages-wrapper"><!-- Result messages generated here (error or success) --></div>
     <div id="download-wrapper" style="display: none">
-        <p>Please download the file <a href="/api/download-file"><span id="filename"></span></a></p>
+        <p>Please download the file <a href="/download-file"><span id="filename"></span></a></p>
         <a id="download-link" download="translated.txt" style="display: none">Download</a>
     </div>
-        <!-- TODO : add file download button -->
 {% endblock %}
 
 {% block js %}
