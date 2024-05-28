@@ -1,7 +1,7 @@
 import os
 
 from flask_wtf import FlaskForm
-from wtforms import FileField, SelectField, TextAreaField
+from wtforms import BooleanField, FileField, SelectField, TextAreaField
 from wtforms.validators import DataRequired
 
 from translation import list_languages
@@ -66,7 +66,7 @@ class FileUploadForm(FlaskForm):
         file - FileField - File to translate
         target_language - SelectField - Target language
     """
-    file = FileField("File to translate",
+    file = FileField("File to translate (.txt or .docx)",
                      id="file-to-translate",
                      render_kw={"accept": ".txt,.docx",},
                      validators=[DataRequired("Please select a file to translate"),
@@ -77,6 +77,7 @@ class FileUploadForm(FlaskForm):
                                   choices=[],
                                   default="",
                                   validators=[DataRequired("Please select a target language")])
+    gdpr_consent = BooleanField("I agree to my translated document being stored by the platform", validators=[DataRequired()])
 
     def __init__(self, *args, **kwargs):
         """

@@ -4,3 +4,7 @@
     align-items: center;
     justify-content:space-around;
 }
+
+#status-icon {
+    margin-top: 20px;
+}
