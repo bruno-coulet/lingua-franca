@@ -4,6 +4,7 @@ from pathlib import Path
 import uuid
 
 from flask import Flask, jsonify, render_template, request, send_file, session
+from flask_wtf.csrf import validate_csrf, CSRFError
 
 from forms import TranslationForm, FileUploadForm
 from process_files import UnsuportedFileFormatError, process_file
@@ -100,10 +101,17 @@ def file_upload():
         errors["file"] = "No file uploaded"
     if "target_language" not in request.form:
         errors["target-language"] = "No target language specified"
+    if "csrf_token" not in request.form:
+        errors["csrf"] = "Invalid CSRF token"
     
     file = request.files["file"]
     target_language = request.form["target_language"]
-    # TODO : vérifier le csrf_token
+    csrf_token = request.form["csrf_token"]
+    try:
+        validate_csrf(request.form.get('csrf_token'))
+    except CSRFError as e:
+        errors["csrf"] = str(e)
+
     if not errors:
         try:
             translated_file, source_language = process_file(file, target_language)
