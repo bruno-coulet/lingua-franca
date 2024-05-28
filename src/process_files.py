@@ -71,6 +71,5 @@ def process_file(file, target_language):
         return process_txt_file(file, target_language)
     elif file_ext == ".docx":
         return process_docx_file(file, target_language)
-    # TODO : add support for other file types
     else:
         raise UnsuportedFileFormatError("Unsupported file format (only .txt files are supported)")

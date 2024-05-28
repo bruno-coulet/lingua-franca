@@ -1,17 +1,15 @@
 from os import urandom as generate_secret_key
 import os
 from pathlib import Path
+import uuid
 
 from flask import Flask, jsonify, render_template, request, send_file, session
+from flask_wtf.csrf import validate_csrf, CSRFError
 
 from forms import TranslationForm, FileUploadForm
 from process_files import UnsuportedFileFormatError, process_file
 from translation import detect_language, translate_text
 
-
-# Configuration
-# TODO : move to .env file and read
-DEBUG = True
 
 # Flask app
 app = Flask(__name__)
@@ -103,16 +101,24 @@ def file_upload():
         errors["file"] = "No file uploaded"
     if "target_language" not in request.form:
         errors["target-language"] = "No target language specified"
+    if "csrf_token" not in request.form:
+        errors["csrf"] = "Invalid CSRF token"
     
     file = request.files["file"]
     target_language = request.form["target_language"]
-    # TODO : vérifier le csrf_token
+    csrf_token = request.form["csrf_token"]
+    try:
+        validate_csrf(request.form.get('csrf_token'))
+    except CSRFError as e:
+        errors["csrf"] = str(e)
+
     if not errors:
         try:
             translated_file, source_language = process_file(file, target_language)
             translated_filename = f'translated_{source_language}_{target_language}_{file.filename}'
-                    
-            translated_file_path = os.path.join(TRANSLATED_FILES_FOLDER, translated_filename)
+            
+            file_ext = os.path.splitext(translated_filename)[-1].lower()  # Get file extension
+            translated_file_path = os.path.join(TRANSLATED_FILES_FOLDER, f"{uuid.uuid4()}.{file_ext}")
 
             with open(translated_file_path, "wb") as f:
                 f.write(translated_file.getvalue())
@@ -121,7 +127,6 @@ def file_upload():
             session["translated_filename"] = translated_filename
 
             message = "File uploaded and translated successfully."
-            file_ext = os.path.splitext(translated_filename)[-1].lower()  # Get file extension
             if file_ext == ".docx":
                 message += " Tables are not at the same place, they will be at the end of the file."
 
@@ -151,10 +156,9 @@ def download_file():
     elif file_ext == ".docx":
         mimetype = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 
-
     return send_file(translated_file_path, as_attachment=True, download_name=translated_filename, mimetype=mimetype)
 
 
 # Run
 if __name__ == "__main__":
-    app.run(debug=DEBUG)
+    app.run()
